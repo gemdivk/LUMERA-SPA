@@ -1,0 +1,58 @@
+
+syntax = "proto3";
+
+package review;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./proto;review";
+
+service ReviewService {
+  rpc CreateReview(CreateReviewRequest) returns (ReviewResponse);
+  rpc GetReview(GetReviewRequest) returns (ReviewResponse);
+  rpc UpdateReview(UpdateReviewRequest) returns (ReviewResponse);
+  rpc DeleteReview(DeleteReviewRequest) returns (DeleteReviewResponse);
+  rpc ListReviews(ListReviewsRequest) returns (ListReviewsResponse);
+}
+
+message CreateReviewRequest {
+  string salon_id = 1;
+  string user_id = 2;
+  string content = 3;
+  int32 rating = 4;
+}
+
+message GetReviewRequest {
+  string id = 1;
+}
+
+message UpdateReviewRequest {
+  string id = 1;
+  string content = 2;
+  int32 rating = 3;
+}
+
+message DeleteReviewRequest {
+  string id = 1;
+}
+
+message ListReviewsRequest {
+  string salon_id = 1;
+}
+
+message ReviewResponse {
+  string id = 1;
+  string salon_id = 2;
+  string user_id = 3;
+  string content = 4;
+  int32 rating = 5;
+  google.protobuf.Timestamp  created_at = 6;
+}
+
+message ListReviewsResponse {
+  repeated ReviewResponse reviews = 1;
+}
+
+message DeleteReviewResponse {
+  bool success = 1;
+}
