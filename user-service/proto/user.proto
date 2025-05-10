@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "./proto;user";
+
+service UserService {
+  rpc Register (RegisterRequest) returns (AuthResponse);
+  rpc Login (LoginRequest) returns (AuthResponse);
+
+  rpc GetProfile (GetProfileRequest) returns (UserProfile);
+  rpc GetMe (google.protobuf.Empty) returns (UserProfile);
+  rpc UpdateProfile (UpdateProfileRequest) returns (UserProfile);
+
+  rpc AssignRole (AssignRoleRequest) returns (AssignRoleResponse);
+  rpc ListRoles (ListRolesRequest) returns (ListRolesResponse);
+
+  rpc GetAllUsers (google.protobuf.Empty) returns (UserList);
+  rpc SearchUsers (SearchUserRequest) returns (UserList);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+  rpc RemoveRole (RemoveRoleRequest) returns (RemoveRoleResponse);
+}
+
+
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message GetProfileRequest {
+  string user_id = 1;
+}
+
+message UpdateProfileRequest {
+  string name = 1;
+  string password = 2;
+}
+
+message AssignRoleRequest {
+  string user_id = 1;
+  string role_name = 2;
+}
+
+message ListRolesRequest {
+  string user_id = 1;
+}
+
+message SearchUserRequest {
+  string query = 1;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message RemoveRoleRequest {
+  string user_id = 1;
+  string role_name = 2;
+}
+
+message AuthResponse {
+  string token = 1;
+  UserProfile profile = 2;
+}
+
+
+message AssignRoleResponse {
+  bool success = 1;
+}
+
+message ListRolesResponse {
+  repeated string roles = 1;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+}
+
+message RemoveRoleResponse {
+  bool success = 1;
+}
+
+message UserList {
+  repeated UserProfile users = 1;
+}
+
+message UserProfile {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string created_at = 4;
+  repeated string roles = 5;
+}
