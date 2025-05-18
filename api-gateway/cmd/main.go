@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gemdivk/LUMERA-SPA/api-gateway/booking"
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/review"
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/user"
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 func main() {
 	review.InitGRPCClient()
 	user.InitGRPCClient()
+	booking.InitGRPCClient()
 
 	router := gin.Default()
 
@@ -36,7 +38,14 @@ func main() {
 		userGroup.GET("/:id/roles", user.AuthMiddleware(), user.ListRoles)
 		userGroup.GET("/:id", user.AuthMiddleware(), user.GetProfile)
 		userGroup.DELETE("/:id", user.AuthMiddleware(), user.DeleteUser)
-
 	}
+	bookingGroup := router.Group("/bookings")
+	{
+		bookingGroup.POST("/", booking.CreateBooking)
+		bookingGroup.DELETE("/:id", booking.CancelBooking)
+		bookingGroup.GET("/", booking.ListClientBookings)
+	}
+	router.GET("/available-slots", booking.ListAvailableSlots)
+
 	router.Run(":8080")
 }
