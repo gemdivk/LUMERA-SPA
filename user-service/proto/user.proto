@@ -9,6 +9,7 @@ option go_package = "./proto;user";
 service UserService {
   rpc Register (RegisterRequest) returns (AuthResponse);
   rpc Login (LoginRequest) returns (AuthResponse);
+  rpc Logout(google.protobuf.Empty) returns (LogoutResponse);
 
   rpc GetProfile (GetProfileRequest) returns (UserProfile);
   rpc GetMe (google.protobuf.Empty) returns (UserProfile);
@@ -100,6 +101,10 @@ message UserProfile {
   string email = 3;
   string created_at = 4;
   repeated string roles = 5;
+}
+
+message LogoutResponse {
+  bool success = 1;
 }
 
 message VerifyEmailRequest {

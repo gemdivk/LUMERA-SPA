@@ -248,3 +248,19 @@ func VerifyEmail(c *gin.Context) {
 	}
 	c.String(http.StatusOK, "Your email has been successfully verified!")
 }
+func Logout(c *gin.Context) {
+	auth := c.GetHeader("Authorization")
+	if auth == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
+		return
+	}
+	md := metadata.New(map[string]string{"authorization": auth})
+	ctx := metadata.NewOutgoingContext(c.Request.Context(), md)
+
+	resp, err := UserClient.Logout(ctx, &emptypb.Empty{})
+	if err != nil {
+		handleGrpcError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, resp)
+}
