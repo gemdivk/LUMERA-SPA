@@ -211,3 +211,10 @@ func (s *UserServer) RemoveRole(ctx context.Context, req *pb.RemoveRoleRequest) 
 	err = s.Usecase.RemoveRole(req.UserId, req.RoleName)
 	return &pb.RemoveRoleResponse{Success: err == nil}, err
 }
+func (s *UserServer) VerifyEmail(ctx context.Context, req *pb.VerifyEmailRequest) (*pb.VerifyEmailResponse, error) {
+	err := s.Usecase.MarkEmailVerified(req.Token)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid token")
+	}
+	return &pb.VerifyEmailResponse{Success: true}, nil
+}

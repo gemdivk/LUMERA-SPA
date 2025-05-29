@@ -19,32 +19,33 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 func (r *UserRepo) Create(name, email, password string) (*domain.User, error) {
 	id := uuid.New().String()
 	created := time.Now()
-	_, err := r.DB.Exec(`INSERT INTO auth_users (id, name, email, password, created_at) VALUES ($1, $2, $3, $4, $5)`,
-		id, name, email, password, created)
+	_, err := r.DB.Exec(`INSERT INTO auth_users (id, name, email, password, created_at, is_verified) VALUES ($1, $2, $3, $4, $5, $6)`,
+		id, name, email, password, created, false)
 	if err != nil {
 		return nil, err
 	}
 
 	return &domain.User{
-		ID:        id,
-		Name:      name,
-		Email:     email,
-		Password:  password,
-		CreatedAt: created,
+		ID:         id,
+		Name:       name,
+		Email:      email,
+		Password:   password,
+		CreatedAt:  created,
+		IsVerified: false,
 	}, nil
 }
 
 func (r *UserRepo) GetByEmail(email string) (*domain.User, error) {
-	row := r.DB.QueryRow(`SELECT id, name, email, password, created_at FROM auth_users WHERE email=$1`, email)
+	row := r.DB.QueryRow(`SELECT id, name, email, password, created_at, is_verified FROM auth_users WHERE email=$1`, email)
 	u := &domain.User{}
-	err := row.Scan(&u.ID, &u.Name, &u.Email, &u.Password, &u.CreatedAt)
+	err := row.Scan(&u.ID, &u.Name, &u.Email, &u.Password, &u.CreatedAt, &u.IsVerified)
 	return u, err
 }
 
 func (r *UserRepo) GetByID(id string) (*domain.User, error) {
-	row := r.DB.QueryRow(`SELECT id, name, email, password, created_at FROM auth_users WHERE id=$1`, id)
+	row := r.DB.QueryRow(`SELECT id, name, email, password, created_at, is_verified FROM auth_users WHERE id=$1`, id)
 	u := &domain.User{}
-	err := row.Scan(&u.ID, &u.Name, &u.Email, &u.Password, &u.CreatedAt)
+	err := row.Scan(&u.ID, &u.Name, &u.Email, &u.Password, &u.CreatedAt, &u.IsVerified)
 	return u, err
 }
 
@@ -140,5 +141,9 @@ func (r *UserRepo) RemoveRole(userID string, roleName string) error {
 		return err
 	}
 	_, err = r.DB.Exec(`DELETE FROM auth_user_roles WHERE user_id = $1 AND role_id = $2`, userID, roleID)
+	return err
+}
+func (r *UserRepo) MarkEmailVerified(userID string) error {
+	_, err := r.DB.Exec(`UPDATE auth_users SET is_verified = true WHERE id = $1`, userID)
 	return err
 }

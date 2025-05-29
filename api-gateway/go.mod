@@ -1,13 +1,14 @@
 module github.com/gemdivk/LUMERA-SPA/api-gateway
 
-go 1.24.1
+go 1.24.3
 
 require (
+	github.com/gemdivk/LUMERA-SPA/booking-service v0.0.0
+	github.com/gemdivk/LUMERA-SPA/notification-service v0.0.0
 	github.com/gemdivk/LUMERA-SPA/review-service v0.0.0
 	github.com/gemdivk/LUMERA-SPA/user-service v0.0.0
-		github.com/gemdivk/LUMERA-SPA/booking-service v0.0.0
 	github.com/gin-gonic/gin v1.10.0
-	google.golang.org/grpc v1.72.0
+	google.golang.org/grpc v1.72.2
 	google.golang.org/protobuf v1.36.6
 )
 
@@ -44,3 +45,5 @@ replace github.com/gemdivk/LUMERA-SPA/review-service => ../review-service
 replace github.com/gemdivk/LUMERA-SPA/user-service => ../user-service
 
 replace github.com/gemdivk/LUMERA-SPA/booking-service => ../booking-service
+
+replace github.com/gemdivk/LUMERA-SPA/notification-service => ../notification-service

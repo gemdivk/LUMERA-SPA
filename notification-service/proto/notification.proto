@@ -2,23 +2,21 @@ syntax = "proto3";
 
 package notification;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "./proto;notification";
 
 service NotificationService {
-  rpc ListNotifications (Empty) returns (NotificationList);
+  rpc GetEmailLogs (google.protobuf.Empty) returns (EmailLogList);
 }
 
-message Empty {}
-
-message Notification {
+message EmailLog {
   int32 id = 1;
-  string to = 2;
+  string email = 2;
   string subject = 3;
-  string body = 4;
-  string channel = 5;
-  string created_at = 6;
+  string sent_at = 4;
 }
 
-message NotificationList {
-  repeated Notification notifications = 1;
+message EmailLogList {
+  repeated EmailLog logs = 1;
 }

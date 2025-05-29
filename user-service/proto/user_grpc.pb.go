@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.30.2
-// source: user.proto
+// source: proto/user.proto
 
 package user
 
@@ -31,6 +31,7 @@ const (
 	UserService_SearchUsers_FullMethodName   = "/user.UserService/SearchUsers"
 	UserService_DeleteUser_FullMethodName    = "/user.UserService/DeleteUser"
 	UserService_RemoveRole_FullMethodName    = "/user.UserService/RemoveRole"
+	UserService_VerifyEmail_FullMethodName   = "/user.UserService/VerifyEmail"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -48,6 +49,7 @@ type UserServiceClient interface {
 	SearchUsers(ctx context.Context, in *SearchUserRequest, opts ...grpc.CallOption) (*UserList, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
 	RemoveRole(ctx context.Context, in *RemoveRoleRequest, opts ...grpc.CallOption) (*RemoveRoleResponse, error)
+	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*VerifyEmailResponse, error)
 }
 
 type userServiceClient struct {
@@ -168,6 +170,16 @@ func (c *userServiceClient) RemoveRole(ctx context.Context, in *RemoveRoleReques
 	return out, nil
 }
 
+func (c *userServiceClient) VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*VerifyEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyEmailResponse)
+	err := c.cc.Invoke(ctx, UserService_VerifyEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -183,6 +195,7 @@ type UserServiceServer interface {
 	SearchUsers(context.Context, *SearchUserRequest) (*UserList, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
 	RemoveRole(context.Context, *RemoveRoleRequest) (*RemoveRoleResponse, error)
+	VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -225,6 +238,9 @@ func (UnimplementedUserServiceServer) DeleteUser(context.Context, *DeleteUserReq
 }
 func (UnimplementedUserServiceServer) RemoveRole(context.Context, *RemoveRoleRequest) (*RemoveRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveRole not implemented")
+}
+func (UnimplementedUserServiceServer) VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyEmail not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -445,6 +461,24 @@ func _UserService_RemoveRole_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_VerifyEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).VerifyEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_VerifyEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).VerifyEmail(ctx, req.(*VerifyEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -496,7 +530,11 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "RemoveRole",
 			Handler:    _UserService_RemoveRole_Handler,
 		},
+		{
+			MethodName: "VerifyEmail",
+			Handler:    _UserService_VerifyEmail_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user.proto",
+	Metadata: "proto/user.proto",
 }

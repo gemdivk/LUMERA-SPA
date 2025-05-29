@@ -14,4 +14,5 @@ type UserUsecase interface {
 	GetAllUsers() ([]*domain.User, error)
 	SearchUsers(query string) ([]*domain.User, error)
 	DeleteUser(userID string) error
+	MarkEmailVerified(userID string) error
 }

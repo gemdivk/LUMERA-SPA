@@ -21,6 +21,8 @@ service UserService {
   rpc SearchUsers (SearchUserRequest) returns (UserList);
   rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
   rpc RemoveRole (RemoveRoleRequest) returns (RemoveRoleResponse);
+
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
 }
 
 
@@ -98,4 +100,12 @@ message UserProfile {
   string email = 3;
   string created_at = 4;
   repeated string roles = 5;
+}
+
+message VerifyEmailRequest {
+  string token = 1;
+}
+
+message VerifyEmailResponse {
+  bool success = 1;
 }

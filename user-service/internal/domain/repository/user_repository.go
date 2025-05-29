@@ -14,4 +14,5 @@ type UserRepo interface {
 	Search(query string) ([]*domain.User, error)
 	Delete(userID string) error
 	CountUsers() (int, error)
+	MarkEmailVerified(userID string) error
 }
