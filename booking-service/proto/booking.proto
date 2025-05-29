@@ -1,119 +1,53 @@
 syntax = "proto3";
 
 package booking;
-
-import "google/protobuf/timestamp.proto";
-
 option go_package = "./proto;booking";
 
-// ===== SERVICE DEFINITION =====
 service BookingService {
-  rpc ListAvailableSlots(ListAvailableSlotsRequest) returns (ListAvailableSlotsResponse);
   rpc CreateBooking(CreateBookingRequest) returns (BookingResponse);
-  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse);
-  rpc ListClientBookings(ClientBookingsRequest) returns (ClientBookingsResponse);
-
-  rpc AdminCreateProcedure(CreateProcedureRequest) returns (ProcedureResponse);
-  rpc AdminAssignProcedure(AssignProcedureRequest) returns (AssignProcedureResponse);
-  rpc AdminCreateScheduleTemplate(CreateScheduleTemplateRequest) returns (ScheduleTemplateResponse);
-  rpc AdminOverrideDaySchedule(OverrideDayScheduleRequest) returns (OverrideDayScheduleResponse);
-}
-
-// ===== CLIENT =====
-message ListAvailableSlotsRequest {
-  string procedure_id = 1;
-  string date = 2; // "YYYY-MM-DD"
-}
-
-message TimeSlot {
-  string specialist_id = 1;
-  string specialist_name = 2;
-  google.protobuf.Timestamp start_time = 3;
-  google.protobuf.Timestamp end_time = 4;
-}
-
-message ListAvailableSlotsResponse {
-  repeated TimeSlot slots = 1;
+  rpc CancelBooking(CancelBookingRequest) returns (SuccessResponse);
+  rpc RescheduleBooking(RescheduleBookingRequest) returns (BookingResponse);
+  rpc ListBookings(ListBookingsRequest) returns (ListBookingsResponse);
 }
 
 message CreateBookingRequest {
   string client_id = 1;
-  string specialist_id = 2;
+  string salon_id = 2;
   string procedure_id = 3;
-  google.protobuf.Timestamp start_time = 4;
-}
-
-message BookingResponse {
-  string booking_id = 1;
-  string status = 2;
+  string specialist_id = 4;
+  string date = 5; // "2025-06-01"
+  string start_time = 6; // "14:00"
 }
 
 message CancelBookingRequest {
   string booking_id = 1;
 }
 
-message CancelBookingResponse {
-  bool success = 1;
+message RescheduleBookingRequest {
+  string booking_id = 1;
+  string new_date = 2;
+  string new_start_time = 3;
 }
 
-message ClientBookingsRequest {
+message ListBookingsRequest {
   string client_id = 1;
 }
 
-message Booking {
+message BookingResponse {
   string id = 1;
-  string procedure_name = 2;
-  string specialist_name = 3;
-  google.protobuf.Timestamp start_time = 4;
-  google.protobuf.Timestamp end_time = 5;
-  string status = 6;
+  string client_id = 2;
+  string salon_id = 3;
+  string procedure_id = 4;
+  string specialist_id = 5;
+  string date = 6;
+  string start_time = 7;
+  string status = 8;
 }
 
-message ClientBookingsResponse {
-  repeated Booking bookings = 1;
+message ListBookingsResponse {
+  repeated BookingResponse bookings = 1;
 }
 
-// ===== ADMIN =====
-message CreateProcedureRequest {
-  string name = 1;
-  int32 duration_minutes = 2;
-}
-
-message ProcedureResponse {
-  string id = 1;
-  string name = 2;
-  int32 duration_minutes = 3;
-}
-
-message AssignProcedureRequest {
-  string specialist_id = 1;
-  string procedure_id = 2;
-}
-
-message AssignProcedureResponse {
-  bool success = 1;
-}
-
-message CreateScheduleTemplateRequest {
-  string specialist_id = 1;
-  int32 weekday = 2; // 0=Sunday, 1=Monday, ...
-  string start_time = 3; // "09:00"
-  string end_time = 4;   // "17:00"
-  int32 break_minutes = 5;
-}
-
-message ScheduleTemplateResponse {
-  bool success = 1;
-}
-
-message OverrideDayScheduleRequest {
-  string specialist_id = 1;
-  string date = 2; // "YYYY-MM-DD"
-  string start_time = 3; // "10:00"
-  string end_time = 4;   // "15:00"
-  bool is_cancelled = 5;
-}
-
-message OverrideDayScheduleResponse {
+message SuccessResponse {
   bool success = 1;
 }

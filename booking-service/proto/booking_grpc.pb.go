@@ -19,30 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BookingService_ListAvailableSlots_FullMethodName          = "/booking.BookingService/ListAvailableSlots"
-	BookingService_CreateBooking_FullMethodName               = "/booking.BookingService/CreateBooking"
-	BookingService_CancelBooking_FullMethodName               = "/booking.BookingService/CancelBooking"
-	BookingService_ListClientBookings_FullMethodName          = "/booking.BookingService/ListClientBookings"
-	BookingService_AdminCreateProcedure_FullMethodName        = "/booking.BookingService/AdminCreateProcedure"
-	BookingService_AdminAssignProcedure_FullMethodName        = "/booking.BookingService/AdminAssignProcedure"
-	BookingService_AdminCreateScheduleTemplate_FullMethodName = "/booking.BookingService/AdminCreateScheduleTemplate"
-	BookingService_AdminOverrideDaySchedule_FullMethodName    = "/booking.BookingService/AdminOverrideDaySchedule"
+	BookingService_CreateBooking_FullMethodName     = "/booking.BookingService/CreateBooking"
+	BookingService_CancelBooking_FullMethodName     = "/booking.BookingService/CancelBooking"
+	BookingService_RescheduleBooking_FullMethodName = "/booking.BookingService/RescheduleBooking"
+	BookingService_ListBookings_FullMethodName      = "/booking.BookingService/ListBookings"
 )
 
 // BookingServiceClient is the client API for BookingService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// ===== SERVICE DEFINITION =====
 type BookingServiceClient interface {
-	ListAvailableSlots(ctx context.Context, in *ListAvailableSlotsRequest, opts ...grpc.CallOption) (*ListAvailableSlotsResponse, error)
 	CreateBooking(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
-	CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*CancelBookingResponse, error)
-	ListClientBookings(ctx context.Context, in *ClientBookingsRequest, opts ...grpc.CallOption) (*ClientBookingsResponse, error)
-	AdminCreateProcedure(ctx context.Context, in *CreateProcedureRequest, opts ...grpc.CallOption) (*ProcedureResponse, error)
-	AdminAssignProcedure(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*AssignProcedureResponse, error)
-	AdminCreateScheduleTemplate(ctx context.Context, in *CreateScheduleTemplateRequest, opts ...grpc.CallOption) (*ScheduleTemplateResponse, error)
-	AdminOverrideDaySchedule(ctx context.Context, in *OverrideDayScheduleRequest, opts ...grpc.CallOption) (*OverrideDayScheduleResponse, error)
+	CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
+	RescheduleBooking(ctx context.Context, in *RescheduleBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
+	ListBookings(ctx context.Context, in *ListBookingsRequest, opts ...grpc.CallOption) (*ListBookingsResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -51,16 +41,6 @@ type bookingServiceClient struct {
 
 func NewBookingServiceClient(cc grpc.ClientConnInterface) BookingServiceClient {
 	return &bookingServiceClient{cc}
-}
-
-func (c *bookingServiceClient) ListAvailableSlots(ctx context.Context, in *ListAvailableSlotsRequest, opts ...grpc.CallOption) (*ListAvailableSlotsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAvailableSlotsResponse)
-	err := c.cc.Invoke(ctx, BookingService_ListAvailableSlots_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *bookingServiceClient) CreateBooking(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
@@ -73,9 +53,9 @@ func (c *bookingServiceClient) CreateBooking(ctx context.Context, in *CreateBook
 	return out, nil
 }
 
-func (c *bookingServiceClient) CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*CancelBookingResponse, error) {
+func (c *bookingServiceClient) CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CancelBookingResponse)
+	out := new(SuccessResponse)
 	err := c.cc.Invoke(ctx, BookingService_CancelBooking_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -83,50 +63,20 @@ func (c *bookingServiceClient) CancelBooking(ctx context.Context, in *CancelBook
 	return out, nil
 }
 
-func (c *bookingServiceClient) ListClientBookings(ctx context.Context, in *ClientBookingsRequest, opts ...grpc.CallOption) (*ClientBookingsResponse, error) {
+func (c *bookingServiceClient) RescheduleBooking(ctx context.Context, in *RescheduleBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ClientBookingsResponse)
-	err := c.cc.Invoke(ctx, BookingService_ListClientBookings_FullMethodName, in, out, cOpts...)
+	out := new(BookingResponse)
+	err := c.cc.Invoke(ctx, BookingService_RescheduleBooking_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookingServiceClient) AdminCreateProcedure(ctx context.Context, in *CreateProcedureRequest, opts ...grpc.CallOption) (*ProcedureResponse, error) {
+func (c *bookingServiceClient) ListBookings(ctx context.Context, in *ListBookingsRequest, opts ...grpc.CallOption) (*ListBookingsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProcedureResponse)
-	err := c.cc.Invoke(ctx, BookingService_AdminCreateProcedure_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bookingServiceClient) AdminAssignProcedure(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*AssignProcedureResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AssignProcedureResponse)
-	err := c.cc.Invoke(ctx, BookingService_AdminAssignProcedure_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bookingServiceClient) AdminCreateScheduleTemplate(ctx context.Context, in *CreateScheduleTemplateRequest, opts ...grpc.CallOption) (*ScheduleTemplateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ScheduleTemplateResponse)
-	err := c.cc.Invoke(ctx, BookingService_AdminCreateScheduleTemplate_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bookingServiceClient) AdminOverrideDaySchedule(ctx context.Context, in *OverrideDayScheduleRequest, opts ...grpc.CallOption) (*OverrideDayScheduleResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(OverrideDayScheduleResponse)
-	err := c.cc.Invoke(ctx, BookingService_AdminOverrideDaySchedule_FullMethodName, in, out, cOpts...)
+	out := new(ListBookingsResponse)
+	err := c.cc.Invoke(ctx, BookingService_ListBookings_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,17 +86,11 @@ func (c *bookingServiceClient) AdminOverrideDaySchedule(ctx context.Context, in 
 // BookingServiceServer is the server API for BookingService service.
 // All implementations must embed UnimplementedBookingServiceServer
 // for forward compatibility.
-//
-// ===== SERVICE DEFINITION =====
 type BookingServiceServer interface {
-	ListAvailableSlots(context.Context, *ListAvailableSlotsRequest) (*ListAvailableSlotsResponse, error)
 	CreateBooking(context.Context, *CreateBookingRequest) (*BookingResponse, error)
-	CancelBooking(context.Context, *CancelBookingRequest) (*CancelBookingResponse, error)
-	ListClientBookings(context.Context, *ClientBookingsRequest) (*ClientBookingsResponse, error)
-	AdminCreateProcedure(context.Context, *CreateProcedureRequest) (*ProcedureResponse, error)
-	AdminAssignProcedure(context.Context, *AssignProcedureRequest) (*AssignProcedureResponse, error)
-	AdminCreateScheduleTemplate(context.Context, *CreateScheduleTemplateRequest) (*ScheduleTemplateResponse, error)
-	AdminOverrideDaySchedule(context.Context, *OverrideDayScheduleRequest) (*OverrideDayScheduleResponse, error)
+	CancelBooking(context.Context, *CancelBookingRequest) (*SuccessResponse, error)
+	RescheduleBooking(context.Context, *RescheduleBookingRequest) (*BookingResponse, error)
+	ListBookings(context.Context, *ListBookingsRequest) (*ListBookingsResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -157,29 +101,17 @@ type BookingServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedBookingServiceServer struct{}
 
-func (UnimplementedBookingServiceServer) ListAvailableSlots(context.Context, *ListAvailableSlotsRequest) (*ListAvailableSlotsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAvailableSlots not implemented")
-}
 func (UnimplementedBookingServiceServer) CreateBooking(context.Context, *CreateBookingRequest) (*BookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBooking not implemented")
 }
-func (UnimplementedBookingServiceServer) CancelBooking(context.Context, *CancelBookingRequest) (*CancelBookingResponse, error) {
+func (UnimplementedBookingServiceServer) CancelBooking(context.Context, *CancelBookingRequest) (*SuccessResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelBooking not implemented")
 }
-func (UnimplementedBookingServiceServer) ListClientBookings(context.Context, *ClientBookingsRequest) (*ClientBookingsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListClientBookings not implemented")
+func (UnimplementedBookingServiceServer) RescheduleBooking(context.Context, *RescheduleBookingRequest) (*BookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RescheduleBooking not implemented")
 }
-func (UnimplementedBookingServiceServer) AdminCreateProcedure(context.Context, *CreateProcedureRequest) (*ProcedureResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdminCreateProcedure not implemented")
-}
-func (UnimplementedBookingServiceServer) AdminAssignProcedure(context.Context, *AssignProcedureRequest) (*AssignProcedureResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdminAssignProcedure not implemented")
-}
-func (UnimplementedBookingServiceServer) AdminCreateScheduleTemplate(context.Context, *CreateScheduleTemplateRequest) (*ScheduleTemplateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdminCreateScheduleTemplate not implemented")
-}
-func (UnimplementedBookingServiceServer) AdminOverrideDaySchedule(context.Context, *OverrideDayScheduleRequest) (*OverrideDayScheduleResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdminOverrideDaySchedule not implemented")
+func (UnimplementedBookingServiceServer) ListBookings(context.Context, *ListBookingsRequest) (*ListBookingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBookings not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
 func (UnimplementedBookingServiceServer) testEmbeddedByValue()                        {}
@@ -200,24 +132,6 @@ func RegisterBookingServiceServer(s grpc.ServiceRegistrar, srv BookingServiceSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&BookingService_ServiceDesc, srv)
-}
-
-func _BookingService_ListAvailableSlots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAvailableSlotsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BookingServiceServer).ListAvailableSlots(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BookingService_ListAvailableSlots_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).ListAvailableSlots(ctx, req.(*ListAvailableSlotsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _BookingService_CreateBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -256,92 +170,38 @@ func _BookingService_CancelBooking_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BookingService_ListClientBookings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClientBookingsRequest)
+func _BookingService_RescheduleBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RescheduleBookingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookingServiceServer).ListClientBookings(ctx, in)
+		return srv.(BookingServiceServer).RescheduleBooking(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BookingService_ListClientBookings_FullMethodName,
+		FullMethod: BookingService_RescheduleBooking_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).ListClientBookings(ctx, req.(*ClientBookingsRequest))
+		return srv.(BookingServiceServer).RescheduleBooking(ctx, req.(*RescheduleBookingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BookingService_AdminCreateProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateProcedureRequest)
+func _BookingService_ListBookings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBookingsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookingServiceServer).AdminCreateProcedure(ctx, in)
+		return srv.(BookingServiceServer).ListBookings(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BookingService_AdminCreateProcedure_FullMethodName,
+		FullMethod: BookingService_ListBookings_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).AdminCreateProcedure(ctx, req.(*CreateProcedureRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BookingService_AdminAssignProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssignProcedureRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BookingServiceServer).AdminAssignProcedure(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BookingService_AdminAssignProcedure_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).AdminAssignProcedure(ctx, req.(*AssignProcedureRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BookingService_AdminCreateScheduleTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateScheduleTemplateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BookingServiceServer).AdminCreateScheduleTemplate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BookingService_AdminCreateScheduleTemplate_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).AdminCreateScheduleTemplate(ctx, req.(*CreateScheduleTemplateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BookingService_AdminOverrideDaySchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OverrideDayScheduleRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BookingServiceServer).AdminOverrideDaySchedule(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BookingService_AdminOverrideDaySchedule_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).AdminOverrideDaySchedule(ctx, req.(*OverrideDayScheduleRequest))
+		return srv.(BookingServiceServer).ListBookings(ctx, req.(*ListBookingsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -354,10 +214,6 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BookingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListAvailableSlots",
-			Handler:    _BookingService_ListAvailableSlots_Handler,
-		},
-		{
 			MethodName: "CreateBooking",
 			Handler:    _BookingService_CreateBooking_Handler,
 		},
@@ -366,24 +222,12 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BookingService_CancelBooking_Handler,
 		},
 		{
-			MethodName: "ListClientBookings",
-			Handler:    _BookingService_ListClientBookings_Handler,
+			MethodName: "RescheduleBooking",
+			Handler:    _BookingService_RescheduleBooking_Handler,
 		},
 		{
-			MethodName: "AdminCreateProcedure",
-			Handler:    _BookingService_AdminCreateProcedure_Handler,
-		},
-		{
-			MethodName: "AdminAssignProcedure",
-			Handler:    _BookingService_AdminAssignProcedure_Handler,
-		},
-		{
-			MethodName: "AdminCreateScheduleTemplate",
-			Handler:    _BookingService_AdminCreateScheduleTemplate_Handler,
-		},
-		{
-			MethodName: "AdminOverrideDaySchedule",
-			Handler:    _BookingService_AdminOverrideDaySchedule_Handler,
+			MethodName: "ListBookings",
+			Handler:    _BookingService_ListBookings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

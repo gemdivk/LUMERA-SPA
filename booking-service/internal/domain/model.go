@@ -1,14 +1,12 @@
 package domain
 
-import "time"
-
 type Booking struct {
 	ID           string
 	ClientID     string
-	SpecialistID string
+	SalonID      string
 	ProcedureID  string
-	StartTime    time.Time
-	EndTime      time.Time
+	SpecialistID string
+	Date         string
+	StartTime    string
 	Status       string
-	CreatedAt    time.Time
 }
