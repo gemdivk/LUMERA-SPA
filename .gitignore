@@ -1,2 +1,5 @@
-/review-service/.env
-.idea
+.env
+/user-service/.env
+/user-service/cmd/.env
+/notification-service/.env
+

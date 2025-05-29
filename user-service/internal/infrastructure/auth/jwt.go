@@ -8,6 +8,12 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
+type Claims struct {
+	UserID string
+	Email  string
+	Roles  []string
+}
+
 func GenerateToken(userID, email string, roles []string) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id": userID,
@@ -18,25 +24,39 @@ func GenerateToken(userID, email string, roles []string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
+
 func ParseToken(tokenStr string) (*Claims, error) {
-	claims := jwt.MapClaims{}
-	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
+	parsedClaims := jwt.MapClaims{}
+	token, err := jwt.ParseWithClaims(tokenStr, parsedClaims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
-	if err != nil || !token.Valid {
+
+	if err != nil {
+		if validationErr, ok := err.(*jwt.ValidationError); ok {
+			if validationErr.Errors&jwt.ValidationErrorExpired != 0 {
+				return nil, fmt.Errorf("token expired")
+			}
+		}
+		return nil, fmt.Errorf("invalid token: %v", err)
+	}
+
+	if !token.Valid {
 		return nil, fmt.Errorf("invalid token")
 	}
-	return &Claims{
-		UserID: claims["user_id"].(string),
-		Email:  claims["email"].(string),
-		Roles:  toStringSlice(claims["roles"]),
-	}, nil
-}
 
-type Claims struct {
-	UserID string
-	Email  string
-	Roles  []string
+	userID, ok1 := parsedClaims["user_id"].(string)
+	email, ok2 := parsedClaims["email"].(string)
+	rolesRaw := parsedClaims["roles"]
+
+	if !ok1 || !ok2 {
+		return nil, fmt.Errorf("invalid token claims")
+	}
+
+	return &Claims{
+		UserID: userID,
+		Email:  email,
+		Roles:  toStringSlice(rolesRaw),
+	}, nil
 }
 
 func toStringSlice(v interface{}) []string {
