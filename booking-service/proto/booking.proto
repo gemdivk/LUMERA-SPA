@@ -8,6 +8,7 @@ service BookingService {
   rpc CancelBooking(CancelBookingRequest) returns (SuccessResponse);
   rpc RescheduleBooking(RescheduleBookingRequest) returns (BookingResponse);
   rpc ListBookings(ListBookingsRequest) returns (ListBookingsResponse);
+  rpc GetAllBookings(Empty) returns (ListBookingsResponse); 
 }
 
 message CreateBookingRequest {
@@ -15,8 +16,8 @@ message CreateBookingRequest {
   string salon_id = 2;
   string procedure_id = 3;
   string specialist_id = 4;
-  string date = 5; // "2025-06-01"
-  string start_time = 6; // "14:00"
+  string date = 5;
+  string start_time = 6;
 }
 
 message CancelBookingRequest {
@@ -51,3 +52,5 @@ message ListBookingsResponse {
 message SuccessResponse {
   bool success = 1;
 }
+
+message Empty {}

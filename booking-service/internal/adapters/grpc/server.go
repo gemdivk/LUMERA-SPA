@@ -69,3 +69,15 @@ func toProto(b *domain.Booking) *pb.BookingResponse {
 		Status:       b.Status,
 	}
 }
+
+func (s *BookingServer) GetAllBookings(ctx context.Context, _ *pb.Empty) (*pb.ListBookingsResponse, error) {
+	bookings, err := s.uc.GetAllBookings()
+	if err != nil {
+		return nil, err
+	}
+	var pbBookings []*pb.BookingResponse
+	for _, b := range bookings {
+		pbBookings = append(pbBookings, toProto(b))
+	}
+	return &pb.ListBookingsResponse{Bookings: pbBookings}, nil
+}

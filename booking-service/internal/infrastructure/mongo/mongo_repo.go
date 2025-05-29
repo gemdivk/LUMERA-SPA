@@ -56,3 +56,15 @@ func (r *bookingRepo) ListByClient(clientID string) ([]*domain.Booking, error) {
 	}
 	return result, nil
 }
+
+func (r *bookingRepo) GetAll() ([]*domain.Booking, error) {
+	cursor, err := r.db.Collection("bookings").Find(context.Background(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	var bookings []*domain.Booking
+	if err := cursor.All(context.Background(), &bookings); err != nil {
+		return nil, err
+	}
+	return bookings, nil
+}

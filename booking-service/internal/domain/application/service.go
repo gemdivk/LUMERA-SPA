@@ -7,4 +7,5 @@ type BookingUsecase interface {
 	Cancel(string) error
 	Reschedule(string, string, string) (*domain.Booking, error)
 	ListByClient(string) ([]*domain.Booking, error)
+	GetAllBookings() ([]*domain.Booking, error)
 }

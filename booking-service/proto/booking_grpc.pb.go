@@ -23,6 +23,7 @@ const (
 	BookingService_CancelBooking_FullMethodName     = "/booking.BookingService/CancelBooking"
 	BookingService_RescheduleBooking_FullMethodName = "/booking.BookingService/RescheduleBooking"
 	BookingService_ListBookings_FullMethodName      = "/booking.BookingService/ListBookings"
+	BookingService_GetAllBookings_FullMethodName    = "/booking.BookingService/GetAllBookings"
 )
 
 // BookingServiceClient is the client API for BookingService service.
@@ -33,6 +34,7 @@ type BookingServiceClient interface {
 	CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 	RescheduleBooking(ctx context.Context, in *RescheduleBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
 	ListBookings(ctx context.Context, in *ListBookingsRequest, opts ...grpc.CallOption) (*ListBookingsResponse, error)
+	GetAllBookings(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListBookingsResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -83,6 +85,16 @@ func (c *bookingServiceClient) ListBookings(ctx context.Context, in *ListBooking
 	return out, nil
 }
 
+func (c *bookingServiceClient) GetAllBookings(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListBookingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListBookingsResponse)
+	err := c.cc.Invoke(ctx, BookingService_GetAllBookings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookingServiceServer is the server API for BookingService service.
 // All implementations must embed UnimplementedBookingServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type BookingServiceServer interface {
 	CancelBooking(context.Context, *CancelBookingRequest) (*SuccessResponse, error)
 	RescheduleBooking(context.Context, *RescheduleBookingRequest) (*BookingResponse, error)
 	ListBookings(context.Context, *ListBookingsRequest) (*ListBookingsResponse, error)
+	GetAllBookings(context.Context, *Empty) (*ListBookingsResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedBookingServiceServer) RescheduleBooking(context.Context, *Res
 }
 func (UnimplementedBookingServiceServer) ListBookings(context.Context, *ListBookingsRequest) (*ListBookingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBookings not implemented")
+}
+func (UnimplementedBookingServiceServer) GetAllBookings(context.Context, *Empty) (*ListBookingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllBookings not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
 func (UnimplementedBookingServiceServer) testEmbeddedByValue()                        {}
@@ -206,6 +222,24 @@ func _BookingService_ListBookings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookingService_GetAllBookings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).GetAllBookings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_GetAllBookings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).GetAllBookings(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookingService_ServiceDesc is the grpc.ServiceDesc for BookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListBookings",
 			Handler:    _BookingService_ListBookings_Handler,
+		},
+		{
+			MethodName: "GetAllBookings",
+			Handler:    _BookingService_GetAllBookings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
