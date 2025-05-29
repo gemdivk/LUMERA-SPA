@@ -28,6 +28,7 @@ func main() {
 	{
 		userGroup.POST("/register", user.Register)
 		userGroup.POST("/login", user.Login)
+		userGroup.POST("/logout", user.AuthMiddleware(), user.Logout)
 
 		userGroup.POST("/assign-role", user.AuthMiddleware(), user.AssignRole)
 		userGroup.POST("/remove-role", user.AuthMiddleware(), user.RemoveRole)

@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/gemdivk/LUMERA-SPA/user-service/internal/domain/application"
@@ -201,6 +202,7 @@ func (s *UserServer) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) 
 	return &pb.DeleteUserResponse{Success: err == nil}, err
 }
 func (s *UserServer) RemoveRole(ctx context.Context, req *pb.RemoveRoleRequest) (*pb.RemoveRoleResponse, error) {
+	log.Printf("[GRPC] RemoveRole called with user_id=%s, role_name=%s", req.GetUserId(), req.GetRoleName())
 	claims, err := extractJWTClaims(ctx)
 	if err != nil {
 		return nil, status.Error(codes.Unauthenticated, err.Error())
@@ -217,4 +219,11 @@ func (s *UserServer) VerifyEmail(ctx context.Context, req *pb.VerifyEmailRequest
 		return nil, status.Error(codes.InvalidArgument, "invalid token")
 	}
 	return &pb.VerifyEmailResponse{Success: true}, nil
+}
+func (s *UserServer) Logout(ctx context.Context, _ *emptypb.Empty) (*pb.LogoutResponse, error) {
+	_, err := extractJWTClaims(ctx)
+	if err != nil {
+		return nil, status.Error(codes.Unauthenticated, err.Error())
+	}
+	return &pb.LogoutResponse{Success: true}, nil
 }

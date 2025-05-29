@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.30.2
-// source: proto/user.proto
+// source: user.proto
 
 package user
 
@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	UserService_Register_FullMethodName      = "/user.UserService/Register"
 	UserService_Login_FullMethodName         = "/user.UserService/Login"
+	UserService_Logout_FullMethodName        = "/user.UserService/Logout"
 	UserService_GetProfile_FullMethodName    = "/user.UserService/GetProfile"
 	UserService_GetMe_FullMethodName         = "/user.UserService/GetMe"
 	UserService_UpdateProfile_FullMethodName = "/user.UserService/UpdateProfile"
@@ -40,6 +41,7 @@ const (
 type UserServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	Logout(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LogoutResponse, error)
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*UserProfile, error)
 	GetMe(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserProfile, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UserProfile, error)
@@ -74,6 +76,16 @@ func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AuthResponse)
 	err := c.cc.Invoke(ctx, UserService_Login_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) Logout(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LogoutResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LogoutResponse)
+	err := c.cc.Invoke(ctx, UserService_Logout_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -186,6 +198,7 @@ func (c *userServiceClient) VerifyEmail(ctx context.Context, in *VerifyEmailRequ
 type UserServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*AuthResponse, error)
 	Login(context.Context, *LoginRequest) (*AuthResponse, error)
+	Logout(context.Context, *emptypb.Empty) (*LogoutResponse, error)
 	GetProfile(context.Context, *GetProfileRequest) (*UserProfile, error)
 	GetMe(context.Context, *emptypb.Empty) (*UserProfile, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*UserProfile, error)
@@ -211,6 +224,9 @@ func (UnimplementedUserServiceServer) Register(context.Context, *RegisterRequest
 }
 func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedUserServiceServer) Logout(context.Context, *emptypb.Empty) (*LogoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (UnimplementedUserServiceServer) GetProfile(context.Context, *GetProfileRequest) (*UserProfile, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
@@ -295,6 +311,24 @@ func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).Logout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_Logout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).Logout(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -495,6 +529,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_Login_Handler,
 		},
 		{
+			MethodName: "Logout",
+			Handler:    _UserService_Logout_Handler,
+		},
+		{
 			MethodName: "GetProfile",
 			Handler:    _UserService_GetProfile_Handler,
 		},
@@ -536,5 +574,5 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/user.proto",
+	Metadata: "user.proto",
 }

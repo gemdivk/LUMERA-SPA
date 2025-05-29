@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 	"testing"
 
 	"github.com/gemdivk/LUMERA-SPA/user-service/internal/domain"
@@ -95,10 +96,24 @@ func (m *MockRepo) MarkEmailVerified(userID string) error {
 }
 
 func setup() (*UserInteractor, *MockRepo) {
+	hash, _ := bcrypt.GenerateFromPassword([]byte("password"), 12)
+
 	repo := &MockRepo{
 		users: map[string]*domain.User{
-			"u1": {ID: "u1", Name: "John", Email: "john@example.com", Password: "$2a$12$LkzNkwJrUeFbFa9Tx8u69.T9q8oz1ceobq54FrIXChMiR5PUKxG/S", IsVerified: true},
-			"u2": {ID: "u2", Name: "Unverified", Email: "unverified@example.com", Password: "$2a$12$LkzNkwJrUeFbFa9Tx8u69.T9q8oz1ceobq54FrIXChMiR5PUKxG/S", IsVerified: false},
+			"u1": {
+				ID:         "u1",
+				Name:       "John",
+				Email:      "john@example.com",
+				Password:   string(hash),
+				IsVerified: true,
+			},
+			"u2": {
+				ID:         "u2",
+				Name:       "Unverified",
+				Email:      "unverified@example.com",
+				Password:   string(hash),
+				IsVerified: false,
+			},
 		},
 		roles: map[string][]string{
 			"u1": {"client"},
@@ -163,4 +178,55 @@ func TestGetProfileFromEmail(t *testing.T) {
 	user, err := u.GetProfileFromEmail("john@example.com")
 	assert.NoError(t, err)
 	assert.Equal(t, "u1", user.ID)
+}
+func TestRegister(t *testing.T) {
+	u, repo := setup()
+	user, token, err := u.Register("New User", "new@example.com", "securepass")
+	assert.NoError(t, err)
+	assert.Equal(t, "New User", user.Name)
+	assert.Equal(t, user.ID, token)
+	assert.True(t, repo.created)
+	assert.Contains(t, repo.roles[user.ID], "client")
+}
+
+func TestLogin_Success(t *testing.T) {
+	u, _ := setup()
+	token, err := u.Login("john@example.com", "password") // пароль захеширован в setup
+	assert.NoError(t, err)
+	assert.NotEmpty(t, token)
+}
+
+func TestLogin_Unverified(t *testing.T) {
+	u, _ := setup()
+	_, err := u.Login("unverified@example.com", "password")
+	assert.EqualError(t, err, "email not verified")
+}
+
+func TestLogin_InvalidPassword(t *testing.T) {
+	u, _ := setup()
+	_, err := u.Login("john@example.com", "wrongpass")
+	assert.EqualError(t, err, "invalid credentials")
+}
+
+func TestLogin_UserNotFound(t *testing.T) {
+	u, _ := setup()
+	_, err := u.Login("noone@example.com", "pass")
+	assert.Error(t, err)
+}
+
+func TestGetProfile_CacheHit(t *testing.T) {
+	u, _ := setup()
+	user, err := u.GetProfile("u1")
+	assert.NoError(t, err)
+	assert.Equal(t, "John", user.Name)
+}
+
+func TestGetProfile_CacheMiss(t *testing.T) {
+	u, _ := setup()
+	u.Cache.Delete("u1")
+	user, err := u.GetProfile("u1")
+	assert.NoError(t, err)
+	assert.Equal(t, "John", user.Name)
+	_, found := u.Cache.Get("u1")
+	assert.True(t, found)
 }
