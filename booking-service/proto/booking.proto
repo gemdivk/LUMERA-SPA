@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package booking;
+option go_package = "./proto;booking";
+
+service BookingService {
+  rpc CreateBooking(CreateBookingRequest) returns (BookingResponse);
+  rpc CancelBooking(CancelBookingRequest) returns (SuccessResponse);
+  rpc RescheduleBooking(RescheduleBookingRequest) returns (BookingResponse);
+  rpc ListBookings(ListBookingsRequest) returns (ListBookingsResponse);
+}
+
+message CreateBookingRequest {
+  string client_id = 1;
+  string salon_id = 2;
+  string procedure_id = 3;
+  string specialist_id = 4;
+  string date = 5; // "2025-06-01"
+  string start_time = 6; // "14:00"
+}
+
+message CancelBookingRequest {
+  string booking_id = 1;
+}
+
+message RescheduleBookingRequest {
+  string booking_id = 1;
+  string new_date = 2;
+  string new_start_time = 3;
+}
+
+message ListBookingsRequest {
+  string client_id = 1;
+}
+
+message BookingResponse {
+  string id = 1;
+  string client_id = 2;
+  string salon_id = 3;
+  string procedure_id = 4;
+  string specialist_id = 5;
+  string date = 6;
+  string start_time = 7;
+  string status = 8;
+}
+
+message ListBookingsResponse {
+  repeated BookingResponse bookings = 1;
+}
+
+message SuccessResponse {
+  bool success = 1;
+}
