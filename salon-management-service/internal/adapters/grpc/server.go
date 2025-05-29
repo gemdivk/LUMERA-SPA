@@ -63,3 +63,46 @@ func (s *SalonServer) AddSpecialist(ctx context.Context, req *pb.AddSpecialistRe
 		Name:    result.Name,
 	}, nil
 }
+
+func (s *SalonServer) GetAllSpecialists(ctx context.Context, _ *pb.Empty) (*pb.SpecialistListResponse, error) {
+	specialists, err := s.uc.GetAllSpecialists()
+	if err != nil {
+		return nil, err
+	}
+
+	var res []*pb.SpecialistResponse
+	for _, sp := range specialists {
+		res = append(res, &pb.SpecialistResponse{
+			Id:      sp.ID,
+			SalonId: sp.SalonID,
+			Name:    sp.Name,
+		})
+	}
+	return &pb.SpecialistListResponse{Specialists: res}, nil
+}
+
+func (s *SalonServer) GetAllProcedures(ctx context.Context, _ *pb.Empty) (*pb.ProcedureListResponse, error) {
+	procedures, err := s.uc.GetAllProcedures()
+	if err != nil {
+		return nil, err
+	}
+
+	var res []*pb.ProcedureResponse
+	for _, pr := range procedures {
+		res = append(res, &pb.ProcedureResponse{
+			Id:       pr.ID,
+			SalonId:  pr.SalonID,
+			Name:     pr.Name,
+			Duration: pr.Duration,
+		})
+	}
+	return &pb.ProcedureListResponse{Procedures: res}, nil
+}
+
+func (s *SalonServer) AssignProcedureToSpecialist(ctx context.Context, req *pb.AssignProcedureRequest) (*pb.AssignResponse, error) {
+	err := s.uc.AssignProcedureToSpecialist(req.SpecialistId, req.ProcedureId)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.AssignResponse{Success: true}, nil
+}

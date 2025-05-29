@@ -21,6 +21,42 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Empty struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Empty) Reset() {
+	*x = Empty{}
+	mi := &file_proto_salon_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Empty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Empty) ProtoMessage() {}
+
+func (x *Empty) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{0}
+}
+
 type AddSalonRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -31,7 +67,7 @@ type AddSalonRequest struct {
 
 func (x *AddSalonRequest) Reset() {
 	*x = AddSalonRequest{}
-	mi := &file_proto_salon_proto_msgTypes[0]
+	mi := &file_proto_salon_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +79,7 @@ func (x *AddSalonRequest) String() string {
 func (*AddSalonRequest) ProtoMessage() {}
 
 func (x *AddSalonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[0]
+	mi := &file_proto_salon_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +92,7 @@ func (x *AddSalonRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSalonRequest.ProtoReflect.Descriptor instead.
 func (*AddSalonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{0}
+	return file_proto_salon_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *AddSalonRequest) GetName() string {
@@ -84,7 +120,7 @@ type AddProcedureRequest struct {
 
 func (x *AddProcedureRequest) Reset() {
 	*x = AddProcedureRequest{}
-	mi := &file_proto_salon_proto_msgTypes[1]
+	mi := &file_proto_salon_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -96,7 +132,7 @@ func (x *AddProcedureRequest) String() string {
 func (*AddProcedureRequest) ProtoMessage() {}
 
 func (x *AddProcedureRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[1]
+	mi := &file_proto_salon_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +145,7 @@ func (x *AddProcedureRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddProcedureRequest.ProtoReflect.Descriptor instead.
 func (*AddProcedureRequest) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{1}
+	return file_proto_salon_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AddProcedureRequest) GetSalonId() string {
@@ -143,7 +179,7 @@ type AddSpecialistRequest struct {
 
 func (x *AddSpecialistRequest) Reset() {
 	*x = AddSpecialistRequest{}
-	mi := &file_proto_salon_proto_msgTypes[2]
+	mi := &file_proto_salon_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -155,7 +191,7 @@ func (x *AddSpecialistRequest) String() string {
 func (*AddSpecialistRequest) ProtoMessage() {}
 
 func (x *AddSpecialistRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[2]
+	mi := &file_proto_salon_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -168,7 +204,7 @@ func (x *AddSpecialistRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSpecialistRequest.ProtoReflect.Descriptor instead.
 func (*AddSpecialistRequest) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{2}
+	return file_proto_salon_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AddSpecialistRequest) GetSalonId() string {
@@ -185,6 +221,110 @@ func (x *AddSpecialistRequest) GetName() string {
 	return ""
 }
 
+type AssignProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpecialistId  string                 `protobuf:"bytes,1,opt,name=specialist_id,json=specialistId,proto3" json:"specialist_id,omitempty"`
+	ProcedureId   string                 `protobuf:"bytes,2,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssignProcedureRequest) Reset() {
+	*x = AssignProcedureRequest{}
+	mi := &file_proto_salon_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssignProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignProcedureRequest) ProtoMessage() {}
+
+func (x *AssignProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignProcedureRequest.ProtoReflect.Descriptor instead.
+func (*AssignProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *AssignProcedureRequest) GetSpecialistId() string {
+	if x != nil {
+		return x.SpecialistId
+	}
+	return ""
+}
+
+func (x *AssignProcedureRequest) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+type AssignResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssignResponse) Reset() {
+	*x = AssignResponse{}
+	mi := &file_proto_salon_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssignResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignResponse) ProtoMessage() {}
+
+func (x *AssignResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignResponse.ProtoReflect.Descriptor instead.
+func (*AssignResponse) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AssignResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *AssignResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type SalonResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -196,7 +336,7 @@ type SalonResponse struct {
 
 func (x *SalonResponse) Reset() {
 	*x = SalonResponse{}
-	mi := &file_proto_salon_proto_msgTypes[3]
+	mi := &file_proto_salon_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -208,7 +348,7 @@ func (x *SalonResponse) String() string {
 func (*SalonResponse) ProtoMessage() {}
 
 func (x *SalonResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[3]
+	mi := &file_proto_salon_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -221,7 +361,7 @@ func (x *SalonResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SalonResponse.ProtoReflect.Descriptor instead.
 func (*SalonResponse) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{3}
+	return file_proto_salon_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SalonResponse) GetId() string {
@@ -257,7 +397,7 @@ type ProcedureResponse struct {
 
 func (x *ProcedureResponse) Reset() {
 	*x = ProcedureResponse{}
-	mi := &file_proto_salon_proto_msgTypes[4]
+	mi := &file_proto_salon_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -269,7 +409,7 @@ func (x *ProcedureResponse) String() string {
 func (*ProcedureResponse) ProtoMessage() {}
 
 func (x *ProcedureResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[4]
+	mi := &file_proto_salon_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -282,7 +422,7 @@ func (x *ProcedureResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcedureResponse.ProtoReflect.Descriptor instead.
 func (*ProcedureResponse) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{4}
+	return file_proto_salon_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ProcedureResponse) GetId() string {
@@ -324,7 +464,7 @@ type SpecialistResponse struct {
 
 func (x *SpecialistResponse) Reset() {
 	*x = SpecialistResponse{}
-	mi := &file_proto_salon_proto_msgTypes[5]
+	mi := &file_proto_salon_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -336,7 +476,7 @@ func (x *SpecialistResponse) String() string {
 func (*SpecialistResponse) ProtoMessage() {}
 
 func (x *SpecialistResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_salon_proto_msgTypes[5]
+	mi := &file_proto_salon_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -349,7 +489,7 @@ func (x *SpecialistResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpecialistResponse.ProtoReflect.Descriptor instead.
 func (*SpecialistResponse) Descriptor() ([]byte, []int) {
-	return file_proto_salon_proto_rawDescGZIP(), []int{5}
+	return file_proto_salon_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SpecialistResponse) GetId() string {
@@ -373,11 +513,100 @@ func (x *SpecialistResponse) GetName() string {
 	return ""
 }
 
+type SpecialistListResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Specialists   []*SpecialistResponse  `protobuf:"bytes,1,rep,name=specialists,proto3" json:"specialists,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SpecialistListResponse) Reset() {
+	*x = SpecialistListResponse{}
+	mi := &file_proto_salon_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpecialistListResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpecialistListResponse) ProtoMessage() {}
+
+func (x *SpecialistListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpecialistListResponse.ProtoReflect.Descriptor instead.
+func (*SpecialistListResponse) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SpecialistListResponse) GetSpecialists() []*SpecialistResponse {
+	if x != nil {
+		return x.Specialists
+	}
+	return nil
+}
+
+type ProcedureListResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Procedures    []*ProcedureResponse   `protobuf:"bytes,1,rep,name=procedures,proto3" json:"procedures,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ProcedureListResponse) Reset() {
+	*x = ProcedureListResponse{}
+	mi := &file_proto_salon_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProcedureListResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProcedureListResponse) ProtoMessage() {}
+
+func (x *ProcedureListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProcedureListResponse.ProtoReflect.Descriptor instead.
+func (*ProcedureListResponse) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ProcedureListResponse) GetProcedures() []*ProcedureResponse {
+	if x != nil {
+		return x.Procedures
+	}
+	return nil
+}
+
 var File_proto_salon_proto protoreflect.FileDescriptor
 
 const file_proto_salon_proto_rawDesc = "" +
 	"\n" +
-	"\x11proto/salon.proto\x12\x05salon\"A\n" +
+	"\x11proto/salon.proto\x12\x05salon\"\a\n" +
+	"\x05Empty\"A\n" +
 	"\x0fAddSalonRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
 	"\blocation\x18\x02 \x01(\tR\blocation\"`\n" +
@@ -387,7 +616,13 @@ const file_proto_salon_proto_rawDesc = "" +
 	"\bduration\x18\x03 \x01(\x05R\bduration\"E\n" +
 	"\x14AddSpecialistRequest\x12\x19\n" +
 	"\bsalon_id\x18\x01 \x01(\tR\asalonId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"O\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"`\n" +
+	"\x16AssignProcedureRequest\x12#\n" +
+	"\rspecialist_id\x18\x01 \x01(\tR\fspecialistId\x12!\n" +
+	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\"D\n" +
+	"\x0eAssignResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"O\n" +
 	"\rSalonResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -400,11 +635,20 @@ const file_proto_salon_proto_rawDesc = "" +
 	"\x12SpecialistResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\bsalon_id\x18\x02 \x01(\tR\asalonId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name2\xd7\x01\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"U\n" +
+	"\x16SpecialistListResponse\x12;\n" +
+	"\vspecialists\x18\x01 \x03(\v2\x19.salon.SpecialistResponseR\vspecialists\"Q\n" +
+	"\x15ProcedureListResponse\x128\n" +
+	"\n" +
+	"procedures\x18\x01 \x03(\v2\x18.salon.ProcedureResponseR\n" +
+	"procedures2\xae\x03\n" +
 	"\fSalonService\x128\n" +
 	"\bAddSalon\x12\x16.salon.AddSalonRequest\x1a\x14.salon.SalonResponse\x12D\n" +
 	"\fAddProcedure\x12\x1a.salon.AddProcedureRequest\x1a\x18.salon.ProcedureResponse\x12G\n" +
-	"\rAddSpecialist\x12\x1b.salon.AddSpecialistRequest\x1a\x19.salon.SpecialistResponseB\x0fZ\r./proto;salonb\x06proto3"
+	"\rAddSpecialist\x12\x1b.salon.AddSpecialistRequest\x1a\x19.salon.SpecialistResponse\x12@\n" +
+	"\x11GetAllSpecialists\x12\f.salon.Empty\x1a\x1d.salon.SpecialistListResponse\x12>\n" +
+	"\x10GetAllProcedures\x12\f.salon.Empty\x1a\x1c.salon.ProcedureListResponse\x12S\n" +
+	"\x1bAssignProcedureToSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\x15.salon.AssignResponseB\x0fZ\r./proto;salonb\x06proto3"
 
 var (
 	file_proto_salon_proto_rawDescOnce sync.Once
@@ -418,27 +662,40 @@ func file_proto_salon_proto_rawDescGZIP() []byte {
 	return file_proto_salon_proto_rawDescData
 }
 
-var file_proto_salon_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_salon_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_proto_salon_proto_goTypes = []any{
-	(*AddSalonRequest)(nil),      // 0: salon.AddSalonRequest
-	(*AddProcedureRequest)(nil),  // 1: salon.AddProcedureRequest
-	(*AddSpecialistRequest)(nil), // 2: salon.AddSpecialistRequest
-	(*SalonResponse)(nil),        // 3: salon.SalonResponse
-	(*ProcedureResponse)(nil),    // 4: salon.ProcedureResponse
-	(*SpecialistResponse)(nil),   // 5: salon.SpecialistResponse
+	(*Empty)(nil),                  // 0: salon.Empty
+	(*AddSalonRequest)(nil),        // 1: salon.AddSalonRequest
+	(*AddProcedureRequest)(nil),    // 2: salon.AddProcedureRequest
+	(*AddSpecialistRequest)(nil),   // 3: salon.AddSpecialistRequest
+	(*AssignProcedureRequest)(nil), // 4: salon.AssignProcedureRequest
+	(*AssignResponse)(nil),         // 5: salon.AssignResponse
+	(*SalonResponse)(nil),          // 6: salon.SalonResponse
+	(*ProcedureResponse)(nil),      // 7: salon.ProcedureResponse
+	(*SpecialistResponse)(nil),     // 8: salon.SpecialistResponse
+	(*SpecialistListResponse)(nil), // 9: salon.SpecialistListResponse
+	(*ProcedureListResponse)(nil),  // 10: salon.ProcedureListResponse
 }
 var file_proto_salon_proto_depIdxs = []int32{
-	0, // 0: salon.SalonService.AddSalon:input_type -> salon.AddSalonRequest
-	1, // 1: salon.SalonService.AddProcedure:input_type -> salon.AddProcedureRequest
-	2, // 2: salon.SalonService.AddSpecialist:input_type -> salon.AddSpecialistRequest
-	3, // 3: salon.SalonService.AddSalon:output_type -> salon.SalonResponse
-	4, // 4: salon.SalonService.AddProcedure:output_type -> salon.ProcedureResponse
-	5, // 5: salon.SalonService.AddSpecialist:output_type -> salon.SpecialistResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	8,  // 0: salon.SpecialistListResponse.specialists:type_name -> salon.SpecialistResponse
+	7,  // 1: salon.ProcedureListResponse.procedures:type_name -> salon.ProcedureResponse
+	1,  // 2: salon.SalonService.AddSalon:input_type -> salon.AddSalonRequest
+	2,  // 3: salon.SalonService.AddProcedure:input_type -> salon.AddProcedureRequest
+	3,  // 4: salon.SalonService.AddSpecialist:input_type -> salon.AddSpecialistRequest
+	0,  // 5: salon.SalonService.GetAllSpecialists:input_type -> salon.Empty
+	0,  // 6: salon.SalonService.GetAllProcedures:input_type -> salon.Empty
+	4,  // 7: salon.SalonService.AssignProcedureToSpecialist:input_type -> salon.AssignProcedureRequest
+	6,  // 8: salon.SalonService.AddSalon:output_type -> salon.SalonResponse
+	7,  // 9: salon.SalonService.AddProcedure:output_type -> salon.ProcedureResponse
+	8,  // 10: salon.SalonService.AddSpecialist:output_type -> salon.SpecialistResponse
+	9,  // 11: salon.SalonService.GetAllSpecialists:output_type -> salon.SpecialistListResponse
+	10, // 12: salon.SalonService.GetAllProcedures:output_type -> salon.ProcedureListResponse
+	5,  // 13: salon.SalonService.AssignProcedureToSpecialist:output_type -> salon.AssignResponse
+	8,  // [8:14] is the sub-list for method output_type
+	2,  // [2:8] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_salon_proto_init() }
@@ -452,7 +709,7 @@ func file_proto_salon_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_salon_proto_rawDesc), len(file_proto_salon_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

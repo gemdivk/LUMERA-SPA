@@ -19,9 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SalonService_AddSalon_FullMethodName      = "/salon.SalonService/AddSalon"
-	SalonService_AddProcedure_FullMethodName  = "/salon.SalonService/AddProcedure"
-	SalonService_AddSpecialist_FullMethodName = "/salon.SalonService/AddSpecialist"
+	SalonService_AddSalon_FullMethodName                    = "/salon.SalonService/AddSalon"
+	SalonService_AddProcedure_FullMethodName                = "/salon.SalonService/AddProcedure"
+	SalonService_AddSpecialist_FullMethodName               = "/salon.SalonService/AddSpecialist"
+	SalonService_GetAllSpecialists_FullMethodName           = "/salon.SalonService/GetAllSpecialists"
+	SalonService_GetAllProcedures_FullMethodName            = "/salon.SalonService/GetAllProcedures"
+	SalonService_AssignProcedureToSpecialist_FullMethodName = "/salon.SalonService/AssignProcedureToSpecialist"
 )
 
 // SalonServiceClient is the client API for SalonService service.
@@ -31,6 +34,9 @@ type SalonServiceClient interface {
 	AddSalon(ctx context.Context, in *AddSalonRequest, opts ...grpc.CallOption) (*SalonResponse, error)
 	AddProcedure(ctx context.Context, in *AddProcedureRequest, opts ...grpc.CallOption) (*ProcedureResponse, error)
 	AddSpecialist(ctx context.Context, in *AddSpecialistRequest, opts ...grpc.CallOption) (*SpecialistResponse, error)
+	GetAllSpecialists(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SpecialistListResponse, error)
+	GetAllProcedures(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ProcedureListResponse, error)
+	AssignProcedureToSpecialist(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*AssignResponse, error)
 }
 
 type salonServiceClient struct {
@@ -71,6 +77,36 @@ func (c *salonServiceClient) AddSpecialist(ctx context.Context, in *AddSpecialis
 	return out, nil
 }
 
+func (c *salonServiceClient) GetAllSpecialists(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SpecialistListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SpecialistListResponse)
+	err := c.cc.Invoke(ctx, SalonService_GetAllSpecialists_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) GetAllProcedures(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ProcedureListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcedureListResponse)
+	err := c.cc.Invoke(ctx, SalonService_GetAllProcedures_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) AssignProcedureToSpecialist(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*AssignResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AssignResponse)
+	err := c.cc.Invoke(ctx, SalonService_AssignProcedureToSpecialist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SalonServiceServer is the server API for SalonService service.
 // All implementations must embed UnimplementedSalonServiceServer
 // for forward compatibility.
@@ -78,6 +114,9 @@ type SalonServiceServer interface {
 	AddSalon(context.Context, *AddSalonRequest) (*SalonResponse, error)
 	AddProcedure(context.Context, *AddProcedureRequest) (*ProcedureResponse, error)
 	AddSpecialist(context.Context, *AddSpecialistRequest) (*SpecialistResponse, error)
+	GetAllSpecialists(context.Context, *Empty) (*SpecialistListResponse, error)
+	GetAllProcedures(context.Context, *Empty) (*ProcedureListResponse, error)
+	AssignProcedureToSpecialist(context.Context, *AssignProcedureRequest) (*AssignResponse, error)
 	mustEmbedUnimplementedSalonServiceServer()
 }
 
@@ -96,6 +135,15 @@ func (UnimplementedSalonServiceServer) AddProcedure(context.Context, *AddProcedu
 }
 func (UnimplementedSalonServiceServer) AddSpecialist(context.Context, *AddSpecialistRequest) (*SpecialistResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSpecialist not implemented")
+}
+func (UnimplementedSalonServiceServer) GetAllSpecialists(context.Context, *Empty) (*SpecialistListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllSpecialists not implemented")
+}
+func (UnimplementedSalonServiceServer) GetAllProcedures(context.Context, *Empty) (*ProcedureListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllProcedures not implemented")
+}
+func (UnimplementedSalonServiceServer) AssignProcedureToSpecialist(context.Context, *AssignProcedureRequest) (*AssignResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignProcedureToSpecialist not implemented")
 }
 func (UnimplementedSalonServiceServer) mustEmbedUnimplementedSalonServiceServer() {}
 func (UnimplementedSalonServiceServer) testEmbeddedByValue()                      {}
@@ -172,6 +220,60 @@ func _SalonService_AddSpecialist_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SalonService_GetAllSpecialists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).GetAllSpecialists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_GetAllSpecialists_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).GetAllSpecialists(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_GetAllProcedures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).GetAllProcedures(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_GetAllProcedures_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).GetAllProcedures(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_AssignProcedureToSpecialist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).AssignProcedureToSpecialist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_AssignProcedureToSpecialist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).AssignProcedureToSpecialist(ctx, req.(*AssignProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SalonService_ServiceDesc is the grpc.ServiceDesc for SalonService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +292,18 @@ var SalonService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSpecialist",
 			Handler:    _SalonService_AddSpecialist_Handler,
+		},
+		{
+			MethodName: "GetAllSpecialists",
+			Handler:    _SalonService_GetAllSpecialists_Handler,
+		},
+		{
+			MethodName: "GetAllProcedures",
+			Handler:    _SalonService_GetAllProcedures_Handler,
+		},
+		{
+			MethodName: "AssignProcedureToSpecialist",
+			Handler:    _SalonService_AssignProcedureToSpecialist_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

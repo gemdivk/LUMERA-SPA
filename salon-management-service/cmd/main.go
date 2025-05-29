@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 
+	"github.com/gemdivk/LUMERA-SPA/salon-management-service/internal/infrastructure/cache"
 	"github.com/joho/godotenv"
 	mongoDriver "go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -31,7 +32,8 @@ func main() {
 	db := client.Database("lumera")
 
 	repo := repoMongo.NewMongoRepo(db)
-	uc := usecase.NewSalonUsecase(repo)
+	c := cache.NewMemoryCache()
+	uc := usecase.NewSalonUsecase(repo, c)
 
 	lis, err := net.Listen("tcp", ":50053")
 	if err != nil {
