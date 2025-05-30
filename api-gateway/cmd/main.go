@@ -4,6 +4,7 @@ import (
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/booking"
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/notification"
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/review"
+	"github.com/gemdivk/LUMERA-SPA/api-gateway/salon"
 	"github.com/gemdivk/LUMERA-SPA/api-gateway/user"
 	"github.com/gin-gonic/gin"
 )
@@ -11,8 +12,9 @@ import (
 func main() {
 	review.InitGRPCClient()
 	user.InitGRPCClient()
-	booking.InitGRPCClient()
 	notification.InitGRPCClient()
+	booking.InitGRPCClient()
+	salon.InitGRPCClient()
 
 	router := gin.Default()
 
@@ -44,13 +46,38 @@ func main() {
 
 		router.GET("/verify", user.VerifyEmail)
 	}
+
 	bookingGroup := router.Group("/bookings")
 	{
 		bookingGroup.POST("/", booking.CreateBooking)
+		bookingGroup.PUT("/:id/reschedule", booking.RescheduleBooking)
 		bookingGroup.DELETE("/:id", booking.CancelBooking)
-		bookingGroup.GET("/", booking.ListClientBookings)
+
+		bookingGroup.GET("/", booking.ListAllBookings)
+		bookingGroup.GET("/by-client", booking.ListClientBookings)
 	}
-	router.GET("/available-slots", booking.ListAvailableSlots)
+
+	salonGroup := router.Group("/salon")
+	{
+		salonGroup.POST("/", salon.AddSalon)
+		salonGroup.PUT("/:id", salon.UpdateSalon)
+		salonGroup.DELETE("/:id", salon.DeleteSalon)
+		salonGroup.GET("/", salon.GetAllSalons)
+
+		salonGroup.POST("/procedures", salon.AddProcedure)
+		salonGroup.PUT("/procedures/:id", salon.UpdateProcedure)
+		salonGroup.DELETE("/procedures/:id", salon.DeleteProcedure)
+		salonGroup.GET("/procedures", salon.GetAllProcedures)
+		salonGroup.GET("/procedures-by-time", salon.GetAllProceduresByTime)
+
+		salonGroup.POST("/specialists", salon.AddSpecialist)
+		salonGroup.PUT("/specialists/:id", salon.UpdateSpecialist)
+		salonGroup.DELETE("/specialists/:id", salon.DeleteSpecialist)
+		salonGroup.GET("/specialists", salon.GetAllSpecialists)
+
+		salonGroup.POST("/assign-procedure", salon.AssignProcedureToSpecialist)
+		salonGroup.POST("/unassign-procedure", salon.UnassignProcedureFromSpecialist)
+	}
 	notifications := router.Group("/notifications")
 	{
 		notifications.GET("/logs", user.AuthMiddleware(), notification.GetLogs)

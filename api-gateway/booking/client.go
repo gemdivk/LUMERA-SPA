@@ -10,7 +10,7 @@ import (
 var BookingClient pb.BookingServiceClient
 
 func InitGRPCClient() {
-	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:50054", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to connect to booking-service: %v", err)
 	}
