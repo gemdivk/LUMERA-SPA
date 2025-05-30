@@ -53,3 +53,35 @@ func (s *SalonInteractor) GetAllSpecialists() ([]*entity.Specialist, error) {
 func (s *SalonInteractor) AssignProcedureToSpecialist(specialistID, procedureID string) error {
 	return s.repo.AssignProcedureToSpecialist(specialistID, procedureID)
 }
+
+func (s *SalonInteractor) UpdateSalon(salon *entity.Salon) error {
+	return s.repo.UpdateSalon(salon)
+}
+
+func (s *SalonInteractor) DeleteSalon(id string) error {
+	return s.repo.DeleteSalon(id)
+}
+
+func (s *SalonInteractor) GetAllSalons() ([]*entity.Salon, error) {
+	return s.repo.GetAllSalons()
+}
+
+func (s *SalonInteractor) UpdateProcedure(p *entity.Procedure) error {
+	return s.repo.UpdateProcedure(p)
+}
+
+func (s *SalonInteractor) DeleteProcedure(id string) error {
+	return s.repo.DeleteProcedure(id)
+}
+
+func (s *SalonInteractor) UpdateSpecialist(sp *entity.Specialist) error {
+	return s.repo.UpdateSpecialist(sp)
+}
+
+func (s *SalonInteractor) DeleteSpecialist(id string) error {
+	return s.repo.DeleteSpecialist(id)
+}
+
+func (s *SalonInteractor) RemoveProcedureFromSpecialist(specialistID, procedureID string) error {
+	return s.repo.RemoveProcedureFromSpecialist(specialistID, procedureID)
+}

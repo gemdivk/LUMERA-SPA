@@ -93,6 +93,48 @@ func (mr *MockSalonRepositoryMockRecorder) AssignProcedureToSpecialist(specialis
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AssignProcedureToSpecialist", reflect.TypeOf((*MockSalonRepository)(nil).AssignProcedureToSpecialist), specialistID, procedureID)
 }
 
+// DeleteProcedure mocks base method.
+func (m *MockSalonRepository) DeleteProcedure(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteProcedure", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteProcedure indicates an expected call of DeleteProcedure.
+func (mr *MockSalonRepositoryMockRecorder) DeleteProcedure(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProcedure", reflect.TypeOf((*MockSalonRepository)(nil).DeleteProcedure), id)
+}
+
+// DeleteSalon mocks base method.
+func (m *MockSalonRepository) DeleteSalon(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteSalon", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteSalon indicates an expected call of DeleteSalon.
+func (mr *MockSalonRepositoryMockRecorder) DeleteSalon(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSalon", reflect.TypeOf((*MockSalonRepository)(nil).DeleteSalon), id)
+}
+
+// DeleteSpecialist mocks base method.
+func (m *MockSalonRepository) DeleteSpecialist(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteSpecialist", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteSpecialist indicates an expected call of DeleteSpecialist.
+func (mr *MockSalonRepositoryMockRecorder) DeleteSpecialist(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSpecialist", reflect.TypeOf((*MockSalonRepository)(nil).DeleteSpecialist), id)
+}
+
 // GetAllProcedures mocks base method.
 func (m *MockSalonRepository) GetAllProcedures() ([]*entity.Procedure, error) {
 	m.ctrl.T.Helper()
@@ -108,6 +150,21 @@ func (mr *MockSalonRepositoryMockRecorder) GetAllProcedures() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllProcedures", reflect.TypeOf((*MockSalonRepository)(nil).GetAllProcedures))
 }
 
+// GetAllSalons mocks base method.
+func (m *MockSalonRepository) GetAllSalons() ([]*entity.Salon, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllSalons")
+	ret0, _ := ret[0].([]*entity.Salon)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllSalons indicates an expected call of GetAllSalons.
+func (mr *MockSalonRepositoryMockRecorder) GetAllSalons() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllSalons", reflect.TypeOf((*MockSalonRepository)(nil).GetAllSalons))
+}
+
 // GetAllSpecialists mocks base method.
 func (m *MockSalonRepository) GetAllSpecialists() ([]*entity.Specialist, error) {
 	m.ctrl.T.Helper()
@@ -121,4 +178,60 @@ func (m *MockSalonRepository) GetAllSpecialists() ([]*entity.Specialist, error) 
 func (mr *MockSalonRepositoryMockRecorder) GetAllSpecialists() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllSpecialists", reflect.TypeOf((*MockSalonRepository)(nil).GetAllSpecialists))
+}
+
+// RemoveProcedureFromSpecialist mocks base method.
+func (m *MockSalonRepository) RemoveProcedureFromSpecialist(specialistID, procedureID string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveProcedureFromSpecialist", specialistID, procedureID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RemoveProcedureFromSpecialist indicates an expected call of RemoveProcedureFromSpecialist.
+func (mr *MockSalonRepositoryMockRecorder) RemoveProcedureFromSpecialist(specialistID, procedureID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveProcedureFromSpecialist", reflect.TypeOf((*MockSalonRepository)(nil).RemoveProcedureFromSpecialist), specialistID, procedureID)
+}
+
+// UpdateProcedure mocks base method.
+func (m *MockSalonRepository) UpdateProcedure(arg0 *entity.Procedure) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateProcedure", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateProcedure indicates an expected call of UpdateProcedure.
+func (mr *MockSalonRepositoryMockRecorder) UpdateProcedure(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProcedure", reflect.TypeOf((*MockSalonRepository)(nil).UpdateProcedure), arg0)
+}
+
+// UpdateSalon mocks base method.
+func (m *MockSalonRepository) UpdateSalon(arg0 *entity.Salon) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateSalon", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateSalon indicates an expected call of UpdateSalon.
+func (mr *MockSalonRepositoryMockRecorder) UpdateSalon(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSalon", reflect.TypeOf((*MockSalonRepository)(nil).UpdateSalon), arg0)
+}
+
+// UpdateSpecialist mocks base method.
+func (m *MockSalonRepository) UpdateSpecialist(arg0 *entity.Specialist) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateSpecialist", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateSpecialist indicates an expected call of UpdateSpecialist.
+func (mr *MockSalonRepositoryMockRecorder) UpdateSpecialist(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSpecialist", reflect.TypeOf((*MockSalonRepository)(nil).UpdateSpecialist), arg0)
 }

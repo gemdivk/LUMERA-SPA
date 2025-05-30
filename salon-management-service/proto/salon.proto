@@ -7,6 +7,18 @@ service SalonService {
   rpc AddSalon(AddSalonRequest) returns (SalonResponse);
   rpc AddProcedure(AddProcedureRequest) returns (ProcedureResponse);
   rpc AddSpecialist(AddSpecialistRequest) returns (SpecialistResponse);
+  rpc UpdateSalon(UpdateSalonRequest) returns (Empty);
+  rpc DeleteSalon(IdRequest) returns (Empty);
+  rpc GetAllSalons(Empty) returns (SalonListResponse);
+
+
+  rpc UpdateProcedure(UpdateProcedureRequest) returns (Empty);
+  rpc DeleteProcedure(IdRequest) returns (Empty);
+
+  rpc UpdateSpecialist(UpdateSpecialistRequest) returns (Empty);
+  rpc DeleteSpecialist(IdRequest) returns (Empty);
+
+  rpc RemoveProcedureFromSpecialist(AssignProcedureRequest) returns (Empty);
 
   rpc GetAllSpecialists(Empty) returns (SpecialistListResponse);
   rpc GetAllProcedures(Empty) returns (ProcedureListResponse);
@@ -67,3 +79,33 @@ message SpecialistListResponse {
 message ProcedureListResponse {
   repeated ProcedureResponse procedures = 1;
 }
+
+message IdRequest {
+  string id = 1;
+}
+
+message UpdateSalonRequest {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+}
+
+message UpdateProcedureRequest {
+  string id = 1;
+  string name = 2;
+  int32 duration = 3;
+  string description = 4;
+  string salon_id = 5;
+}
+
+message UpdateSpecialistRequest {
+  string id = 1;
+  string name = 2;
+  string bio = 3;
+  string salon_id = 4;
+}
+
+message SalonListResponse {
+  repeated SalonResponse salons = 1;
+}
+

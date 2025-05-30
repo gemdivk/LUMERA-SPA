@@ -276,7 +276,6 @@ func (x *AssignProcedureRequest) GetProcedureId() string {
 type AssignResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -316,13 +315,6 @@ func (x *AssignResponse) GetSuccess() bool {
 		return x.Success
 	}
 	return false
-}
-
-func (x *AssignResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
 }
 
 type SalonResponse struct {
@@ -601,6 +593,298 @@ func (x *ProcedureListResponse) GetProcedures() []*ProcedureResponse {
 	return nil
 }
 
+type IdRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IdRequest) Reset() {
+	*x = IdRequest{}
+	mi := &file_proto_salon_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdRequest) ProtoMessage() {}
+
+func (x *IdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdRequest.ProtoReflect.Descriptor instead.
+func (*IdRequest) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *IdRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type UpdateSalonRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Location      string                 `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSalonRequest) Reset() {
+	*x = UpdateSalonRequest{}
+	mi := &file_proto_salon_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSalonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSalonRequest) ProtoMessage() {}
+
+func (x *UpdateSalonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSalonRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSalonRequest) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *UpdateSalonRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateSalonRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateSalonRequest) GetLocation() string {
+	if x != nil {
+		return x.Location
+	}
+	return ""
+}
+
+type UpdateProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Duration      int32                  `protobuf:"varint,3,opt,name=duration,proto3" json:"duration,omitempty"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	SalonId       string                 `protobuf:"bytes,5,opt,name=salon_id,json=salonId,proto3" json:"salon_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateProcedureRequest) Reset() {
+	*x = UpdateProcedureRequest{}
+	mi := &file_proto_salon_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateProcedureRequest) ProtoMessage() {}
+
+func (x *UpdateProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateProcedureRequest.ProtoReflect.Descriptor instead.
+func (*UpdateProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *UpdateProcedureRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateProcedureRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateProcedureRequest) GetDuration() int32 {
+	if x != nil {
+		return x.Duration
+	}
+	return 0
+}
+
+func (x *UpdateProcedureRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *UpdateProcedureRequest) GetSalonId() string {
+	if x != nil {
+		return x.SalonId
+	}
+	return ""
+}
+
+type UpdateSpecialistRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Bio           string                 `protobuf:"bytes,3,opt,name=bio,proto3" json:"bio,omitempty"`
+	SalonId       string                 `protobuf:"bytes,4,opt,name=salon_id,json=salonId,proto3" json:"salon_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSpecialistRequest) Reset() {
+	*x = UpdateSpecialistRequest{}
+	mi := &file_proto_salon_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSpecialistRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSpecialistRequest) ProtoMessage() {}
+
+func (x *UpdateSpecialistRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSpecialistRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSpecialistRequest) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *UpdateSpecialistRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateSpecialistRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateSpecialistRequest) GetBio() string {
+	if x != nil {
+		return x.Bio
+	}
+	return ""
+}
+
+func (x *UpdateSpecialistRequest) GetSalonId() string {
+	if x != nil {
+		return x.SalonId
+	}
+	return ""
+}
+
+type SalonListResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Salons        []*SalonResponse       `protobuf:"bytes,1,rep,name=salons,proto3" json:"salons,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SalonListResponse) Reset() {
+	*x = SalonListResponse{}
+	mi := &file_proto_salon_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SalonListResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SalonListResponse) ProtoMessage() {}
+
+func (x *SalonListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_salon_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SalonListResponse.ProtoReflect.Descriptor instead.
+func (*SalonListResponse) Descriptor() ([]byte, []int) {
+	return file_proto_salon_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *SalonListResponse) GetSalons() []*SalonResponse {
+	if x != nil {
+		return x.Salons
+	}
+	return nil
+}
+
 var File_proto_salon_proto protoreflect.FileDescriptor
 
 const file_proto_salon_proto_rawDesc = "" +
@@ -619,10 +903,9 @@ const file_proto_salon_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"`\n" +
 	"\x16AssignProcedureRequest\x12#\n" +
 	"\rspecialist_id\x18\x01 \x01(\tR\fspecialistId\x12!\n" +
-	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\"D\n" +
+	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\"*\n" +
 	"\x0eAssignResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"O\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"O\n" +
 	"\rSalonResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -641,11 +924,38 @@ const file_proto_salon_proto_rawDesc = "" +
 	"\x15ProcedureListResponse\x128\n" +
 	"\n" +
 	"procedures\x18\x01 \x03(\v2\x18.salon.ProcedureResponseR\n" +
-	"procedures2\xae\x03\n" +
+	"procedures\"\x1b\n" +
+	"\tIdRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"T\n" +
+	"\x12UpdateSalonRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\blocation\x18\x03 \x01(\tR\blocation\"\x95\x01\n" +
+	"\x16UpdateProcedureRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bduration\x18\x03 \x01(\x05R\bduration\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x19\n" +
+	"\bsalon_id\x18\x05 \x01(\tR\asalonId\"j\n" +
+	"\x17UpdateSpecialistRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
+	"\x03bio\x18\x03 \x01(\tR\x03bio\x12\x19\n" +
+	"\bsalon_id\x18\x04 \x01(\tR\asalonId\"A\n" +
+	"\x11SalonListResponse\x12,\n" +
+	"\x06salons\x18\x01 \x03(\v2\x14.salon.SalonResponseR\x06salons2\x84\a\n" +
 	"\fSalonService\x128\n" +
 	"\bAddSalon\x12\x16.salon.AddSalonRequest\x1a\x14.salon.SalonResponse\x12D\n" +
 	"\fAddProcedure\x12\x1a.salon.AddProcedureRequest\x1a\x18.salon.ProcedureResponse\x12G\n" +
-	"\rAddSpecialist\x12\x1b.salon.AddSpecialistRequest\x1a\x19.salon.SpecialistResponse\x12@\n" +
+	"\rAddSpecialist\x12\x1b.salon.AddSpecialistRequest\x1a\x19.salon.SpecialistResponse\x126\n" +
+	"\vUpdateSalon\x12\x19.salon.UpdateSalonRequest\x1a\f.salon.Empty\x12-\n" +
+	"\vDeleteSalon\x12\x10.salon.IdRequest\x1a\f.salon.Empty\x126\n" +
+	"\fGetAllSalons\x12\f.salon.Empty\x1a\x18.salon.SalonListResponse\x12>\n" +
+	"\x0fUpdateProcedure\x12\x1d.salon.UpdateProcedureRequest\x1a\f.salon.Empty\x121\n" +
+	"\x0fDeleteProcedure\x12\x10.salon.IdRequest\x1a\f.salon.Empty\x12@\n" +
+	"\x10UpdateSpecialist\x12\x1e.salon.UpdateSpecialistRequest\x1a\f.salon.Empty\x122\n" +
+	"\x10DeleteSpecialist\x12\x10.salon.IdRequest\x1a\f.salon.Empty\x12L\n" +
+	"\x1dRemoveProcedureFromSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\f.salon.Empty\x12@\n" +
 	"\x11GetAllSpecialists\x12\f.salon.Empty\x1a\x1d.salon.SpecialistListResponse\x12>\n" +
 	"\x10GetAllProcedures\x12\f.salon.Empty\x1a\x1c.salon.ProcedureListResponse\x12S\n" +
 	"\x1bAssignProcedureToSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\x15.salon.AssignResponseB\x0fZ\r./proto;salonb\x06proto3"
@@ -662,40 +972,62 @@ func file_proto_salon_proto_rawDescGZIP() []byte {
 	return file_proto_salon_proto_rawDescData
 }
 
-var file_proto_salon_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_salon_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_salon_proto_goTypes = []any{
-	(*Empty)(nil),                  // 0: salon.Empty
-	(*AddSalonRequest)(nil),        // 1: salon.AddSalonRequest
-	(*AddProcedureRequest)(nil),    // 2: salon.AddProcedureRequest
-	(*AddSpecialistRequest)(nil),   // 3: salon.AddSpecialistRequest
-	(*AssignProcedureRequest)(nil), // 4: salon.AssignProcedureRequest
-	(*AssignResponse)(nil),         // 5: salon.AssignResponse
-	(*SalonResponse)(nil),          // 6: salon.SalonResponse
-	(*ProcedureResponse)(nil),      // 7: salon.ProcedureResponse
-	(*SpecialistResponse)(nil),     // 8: salon.SpecialistResponse
-	(*SpecialistListResponse)(nil), // 9: salon.SpecialistListResponse
-	(*ProcedureListResponse)(nil),  // 10: salon.ProcedureListResponse
+	(*Empty)(nil),                   // 0: salon.Empty
+	(*AddSalonRequest)(nil),         // 1: salon.AddSalonRequest
+	(*AddProcedureRequest)(nil),     // 2: salon.AddProcedureRequest
+	(*AddSpecialistRequest)(nil),    // 3: salon.AddSpecialistRequest
+	(*AssignProcedureRequest)(nil),  // 4: salon.AssignProcedureRequest
+	(*AssignResponse)(nil),          // 5: salon.AssignResponse
+	(*SalonResponse)(nil),           // 6: salon.SalonResponse
+	(*ProcedureResponse)(nil),       // 7: salon.ProcedureResponse
+	(*SpecialistResponse)(nil),      // 8: salon.SpecialistResponse
+	(*SpecialistListResponse)(nil),  // 9: salon.SpecialistListResponse
+	(*ProcedureListResponse)(nil),   // 10: salon.ProcedureListResponse
+	(*IdRequest)(nil),               // 11: salon.IdRequest
+	(*UpdateSalonRequest)(nil),      // 12: salon.UpdateSalonRequest
+	(*UpdateProcedureRequest)(nil),  // 13: salon.UpdateProcedureRequest
+	(*UpdateSpecialistRequest)(nil), // 14: salon.UpdateSpecialistRequest
+	(*SalonListResponse)(nil),       // 15: salon.SalonListResponse
 }
 var file_proto_salon_proto_depIdxs = []int32{
 	8,  // 0: salon.SpecialistListResponse.specialists:type_name -> salon.SpecialistResponse
 	7,  // 1: salon.ProcedureListResponse.procedures:type_name -> salon.ProcedureResponse
-	1,  // 2: salon.SalonService.AddSalon:input_type -> salon.AddSalonRequest
-	2,  // 3: salon.SalonService.AddProcedure:input_type -> salon.AddProcedureRequest
-	3,  // 4: salon.SalonService.AddSpecialist:input_type -> salon.AddSpecialistRequest
-	0,  // 5: salon.SalonService.GetAllSpecialists:input_type -> salon.Empty
-	0,  // 6: salon.SalonService.GetAllProcedures:input_type -> salon.Empty
-	4,  // 7: salon.SalonService.AssignProcedureToSpecialist:input_type -> salon.AssignProcedureRequest
-	6,  // 8: salon.SalonService.AddSalon:output_type -> salon.SalonResponse
-	7,  // 9: salon.SalonService.AddProcedure:output_type -> salon.ProcedureResponse
-	8,  // 10: salon.SalonService.AddSpecialist:output_type -> salon.SpecialistResponse
-	9,  // 11: salon.SalonService.GetAllSpecialists:output_type -> salon.SpecialistListResponse
-	10, // 12: salon.SalonService.GetAllProcedures:output_type -> salon.ProcedureListResponse
-	5,  // 13: salon.SalonService.AssignProcedureToSpecialist:output_type -> salon.AssignResponse
-	8,  // [8:14] is the sub-list for method output_type
-	2,  // [2:8] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	6,  // 2: salon.SalonListResponse.salons:type_name -> salon.SalonResponse
+	1,  // 3: salon.SalonService.AddSalon:input_type -> salon.AddSalonRequest
+	2,  // 4: salon.SalonService.AddProcedure:input_type -> salon.AddProcedureRequest
+	3,  // 5: salon.SalonService.AddSpecialist:input_type -> salon.AddSpecialistRequest
+	12, // 6: salon.SalonService.UpdateSalon:input_type -> salon.UpdateSalonRequest
+	11, // 7: salon.SalonService.DeleteSalon:input_type -> salon.IdRequest
+	0,  // 8: salon.SalonService.GetAllSalons:input_type -> salon.Empty
+	13, // 9: salon.SalonService.UpdateProcedure:input_type -> salon.UpdateProcedureRequest
+	11, // 10: salon.SalonService.DeleteProcedure:input_type -> salon.IdRequest
+	14, // 11: salon.SalonService.UpdateSpecialist:input_type -> salon.UpdateSpecialistRequest
+	11, // 12: salon.SalonService.DeleteSpecialist:input_type -> salon.IdRequest
+	4,  // 13: salon.SalonService.RemoveProcedureFromSpecialist:input_type -> salon.AssignProcedureRequest
+	0,  // 14: salon.SalonService.GetAllSpecialists:input_type -> salon.Empty
+	0,  // 15: salon.SalonService.GetAllProcedures:input_type -> salon.Empty
+	4,  // 16: salon.SalonService.AssignProcedureToSpecialist:input_type -> salon.AssignProcedureRequest
+	6,  // 17: salon.SalonService.AddSalon:output_type -> salon.SalonResponse
+	7,  // 18: salon.SalonService.AddProcedure:output_type -> salon.ProcedureResponse
+	8,  // 19: salon.SalonService.AddSpecialist:output_type -> salon.SpecialistResponse
+	0,  // 20: salon.SalonService.UpdateSalon:output_type -> salon.Empty
+	0,  // 21: salon.SalonService.DeleteSalon:output_type -> salon.Empty
+	15, // 22: salon.SalonService.GetAllSalons:output_type -> salon.SalonListResponse
+	0,  // 23: salon.SalonService.UpdateProcedure:output_type -> salon.Empty
+	0,  // 24: salon.SalonService.DeleteProcedure:output_type -> salon.Empty
+	0,  // 25: salon.SalonService.UpdateSpecialist:output_type -> salon.Empty
+	0,  // 26: salon.SalonService.DeleteSpecialist:output_type -> salon.Empty
+	0,  // 27: salon.SalonService.RemoveProcedureFromSpecialist:output_type -> salon.Empty
+	9,  // 28: salon.SalonService.GetAllSpecialists:output_type -> salon.SpecialistListResponse
+	10, // 29: salon.SalonService.GetAllProcedures:output_type -> salon.ProcedureListResponse
+	5,  // 30: salon.SalonService.AssignProcedureToSpecialist:output_type -> salon.AssignResponse
+	17, // [17:31] is the sub-list for method output_type
+	3,  // [3:17] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_salon_proto_init() }
@@ -709,7 +1041,7 @@ func file_proto_salon_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_salon_proto_rawDesc), len(file_proto_salon_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

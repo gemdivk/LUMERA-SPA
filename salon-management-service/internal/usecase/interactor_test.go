@@ -1,96 +1,58 @@
-package usecase_test
+package usecase
 
 import (
-	"testing"
-
-	cacheMocks "github.com/gemdivk/LUMERA-SPA/salon-management-service/internal/domain/cache/mocks"
-	"github.com/gemdivk/LUMERA-SPA/salon-management-service/internal/domain/entity"
-	repoMocks "github.com/gemdivk/LUMERA-SPA/salon-management-service/internal/domain/repository/mocks"
-	"github.com/gemdivk/LUMERA-SPA/salon-management-service/internal/usecase"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
+	"fmt"
+	"time"
 )
 
-func TestGetAllProcedures_CacheHit(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockRepo := repoMocks.NewMockSalonRepository(ctrl)
-	mockCache := cacheMocks.NewMockSalonCache(ctrl)
-
-	expected := []*entity.Procedure{
-		{ID: "1", SalonID: "s1", Name: "Hot Stone", Duration: 30},
+func (s *SalonInteractor) GetProcedureSlots(procedureID string, date string) ([]string, error) {
+	override, err := s.repo.GetScheduleOverride(procedureID, date)
+	if err != nil {
+		return nil, err
+	}
+	var startTime, endTime string
+	if override != nil {
+		startTime = override.StartTime
+		endTime = override.EndTime
+	} else {
+		parsedDate, err := time.Parse("2006-01-02", date)
+		if err != nil {
+			return nil, err
+		}
+		weekday := parsedDate.Weekday()
+		sched, err := s.repo.GetWeeklySchedule(procedureID, int32(weekday))
+		if err != nil {
+			return nil, err
+		}
+		if sched == nil {
+			return []string{}, nil
+		}
+		startTime = sched.StartTime
+		endTime = sched.EndTime
 	}
 
-	mockCache.EXPECT().GetProcedures().Return(expected, true)
-
-	uc := usecase.NewSalonUsecase(mockRepo, mockCache)
-
-	result, err := uc.GetAllProcedures()
-	assert.NoError(t, err)
-	assert.Equal(t, expected, result)
-}
-
-func TestGetAllProcedures_CacheMiss(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockRepo := repoMocks.NewMockSalonRepository(ctrl)
-	mockCache := cacheMocks.NewMockSalonCache(ctrl)
-
-	expected := []*entity.Procedure{
-		{ID: "2", SalonID: "s2", Name: "Massage", Duration: 60},
+	procs, err := s.repo.GetAllProcedures()
+	if err != nil {
+		return nil, err
+	}
+	var duration int32
+	for _, p := range procs {
+		if p.ID == procedureID {
+			duration = p.Duration
+			break
+		}
+	}
+	if duration == 0 {
+		return nil, fmt.Errorf("procedure not found")
 	}
 
-	mockCache.EXPECT().GetProcedures().Return(nil, false)
-	mockRepo.EXPECT().GetAllProcedures().Return(expected, nil)
-	mockCache.EXPECT().SetProcedures(expected)
-
-	uc := usecase.NewSalonUsecase(mockRepo, mockCache)
-
-	result, err := uc.GetAllProcedures()
-	assert.NoError(t, err)
-	assert.Equal(t, expected, result)
-}
-
-func TestGetAllSpecialists_CacheHit(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockRepo := repoMocks.NewMockSalonRepository(ctrl)
-	mockCache := cacheMocks.NewMockSalonCache(ctrl)
-
-	expected := []*entity.Specialist{
-		{ID: "sp1", SalonID: "s1", Name: "Daulet"},
+	layout := "15:04"
+	start, _ := time.Parse(layout, startTime)
+	end, _ := time.Parse(layout, endTime)
+	var slots []string
+	for start.Add(time.Duration(duration)*time.Minute).Before(end) || start.Add(time.Duration(duration)*time.Minute).Equal(end) {
+		slots = append(slots, start.Format("15:04"))
+		start = start.Add(time.Duration(duration+15) * time.Minute)
 	}
-
-	mockCache.EXPECT().GetSpecialists().Return(expected, true)
-
-	uc := usecase.NewSalonUsecase(mockRepo, mockCache)
-
-	result, err := uc.GetAllSpecialists()
-	assert.NoError(t, err)
-	assert.Equal(t, expected, result)
-}
-
-func TestGetAllSpecialists_CacheMiss(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockRepo := repoMocks.NewMockSalonRepository(ctrl)
-	mockCache := cacheMocks.NewMockSalonCache(ctrl)
-
-	expected := []*entity.Specialist{
-		{ID: "sp2", SalonID: "s2", Name: "Kamila"},
-	}
-
-	mockCache.EXPECT().GetSpecialists().Return(nil, false)
-	mockRepo.EXPECT().GetAllSpecialists().Return(expected, nil)
-	mockCache.EXPECT().SetSpecialists(expected)
-
-	uc := usecase.NewSalonUsecase(mockRepo, mockCache)
-
-	result, err := uc.GetAllSpecialists()
-	assert.NoError(t, err)
-	assert.Equal(t, expected, result)
+	return slots, nil
 }

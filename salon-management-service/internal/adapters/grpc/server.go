@@ -106,3 +106,69 @@ func (s *SalonServer) AssignProcedureToSpecialist(ctx context.Context, req *pb.A
 	}
 	return &pb.AssignResponse{Success: true}, nil
 }
+
+func (s *SalonServer) UpdateSalon(ctx context.Context, req *pb.UpdateSalonRequest) (*pb.Empty, error) {
+	err := s.uc.UpdateSalon(&entity.Salon{
+		ID:       req.Id,
+		Name:     req.Name,
+		Location: req.Location,
+	})
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) DeleteSalon(ctx context.Context, req *pb.IdRequest) (*pb.Empty, error) {
+	err := s.uc.DeleteSalon(req.Id)
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) GetAllSalons(ctx context.Context, _ *pb.Empty) (*pb.SalonListResponse, error) {
+	salons, err := s.uc.GetAllSalons()
+	if err != nil {
+		return nil, err
+	}
+	var res []*pb.SalonResponse
+	for _, s := range salons {
+		res = append(res, &pb.SalonResponse{
+			Id:       s.ID,
+			Name:     s.Name,
+			Location: s.Location,
+		})
+	}
+	return &pb.SalonListResponse{Salons: res}, nil
+}
+
+func (s *SalonServer) UpdateProcedure(ctx context.Context, req *pb.UpdateProcedureRequest) (*pb.Empty, error) {
+	err := s.uc.UpdateProcedure(&entity.Procedure{
+		ID:          req.Id,
+		Name:        req.Name,
+		Duration:    req.Duration,
+		Description: req.Description,
+		SalonID:     req.SalonId,
+	})
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) DeleteProcedure(ctx context.Context, req *pb.IdRequest) (*pb.Empty, error) {
+	err := s.uc.DeleteProcedure(req.Id)
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) UpdateSpecialist(ctx context.Context, req *pb.UpdateSpecialistRequest) (*pb.Empty, error) {
+	err := s.uc.UpdateSpecialist(&entity.Specialist{
+		ID:      req.Id,
+		Name:    req.Name,
+		Bio:     req.Bio,
+		SalonID: req.SalonId,
+	})
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) DeleteSpecialist(ctx context.Context, req *pb.IdRequest) (*pb.Empty, error) {
+	err := s.uc.DeleteSpecialist(req.Id)
+	return &pb.Empty{}, err
+}
+
+func (s *SalonServer) RemoveProcedureFromSpecialist(ctx context.Context, req *pb.AssignProcedureRequest) (*pb.Empty, error) {
+	err := s.uc.RemoveProcedureFromSpecialist(req.SpecialistId, req.ProcedureId)
+	return &pb.Empty{}, err
+}

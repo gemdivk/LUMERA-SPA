@@ -19,12 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SalonService_AddSalon_FullMethodName                    = "/salon.SalonService/AddSalon"
-	SalonService_AddProcedure_FullMethodName                = "/salon.SalonService/AddProcedure"
-	SalonService_AddSpecialist_FullMethodName               = "/salon.SalonService/AddSpecialist"
-	SalonService_GetAllSpecialists_FullMethodName           = "/salon.SalonService/GetAllSpecialists"
-	SalonService_GetAllProcedures_FullMethodName            = "/salon.SalonService/GetAllProcedures"
-	SalonService_AssignProcedureToSpecialist_FullMethodName = "/salon.SalonService/AssignProcedureToSpecialist"
+	SalonService_AddSalon_FullMethodName                      = "/salon.SalonService/AddSalon"
+	SalonService_AddProcedure_FullMethodName                  = "/salon.SalonService/AddProcedure"
+	SalonService_AddSpecialist_FullMethodName                 = "/salon.SalonService/AddSpecialist"
+	SalonService_UpdateSalon_FullMethodName                   = "/salon.SalonService/UpdateSalon"
+	SalonService_DeleteSalon_FullMethodName                   = "/salon.SalonService/DeleteSalon"
+	SalonService_GetAllSalons_FullMethodName                  = "/salon.SalonService/GetAllSalons"
+	SalonService_UpdateProcedure_FullMethodName               = "/salon.SalonService/UpdateProcedure"
+	SalonService_DeleteProcedure_FullMethodName               = "/salon.SalonService/DeleteProcedure"
+	SalonService_UpdateSpecialist_FullMethodName              = "/salon.SalonService/UpdateSpecialist"
+	SalonService_DeleteSpecialist_FullMethodName              = "/salon.SalonService/DeleteSpecialist"
+	SalonService_RemoveProcedureFromSpecialist_FullMethodName = "/salon.SalonService/RemoveProcedureFromSpecialist"
+	SalonService_GetAllSpecialists_FullMethodName             = "/salon.SalonService/GetAllSpecialists"
+	SalonService_GetAllProcedures_FullMethodName              = "/salon.SalonService/GetAllProcedures"
+	SalonService_AssignProcedureToSpecialist_FullMethodName   = "/salon.SalonService/AssignProcedureToSpecialist"
 )
 
 // SalonServiceClient is the client API for SalonService service.
@@ -34,6 +42,14 @@ type SalonServiceClient interface {
 	AddSalon(ctx context.Context, in *AddSalonRequest, opts ...grpc.CallOption) (*SalonResponse, error)
 	AddProcedure(ctx context.Context, in *AddProcedureRequest, opts ...grpc.CallOption) (*ProcedureResponse, error)
 	AddSpecialist(ctx context.Context, in *AddSpecialistRequest, opts ...grpc.CallOption) (*SpecialistResponse, error)
+	UpdateSalon(ctx context.Context, in *UpdateSalonRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteSalon(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetAllSalons(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SalonListResponse, error)
+	UpdateProcedure(ctx context.Context, in *UpdateProcedureRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteProcedure(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error)
+	UpdateSpecialist(ctx context.Context, in *UpdateSpecialistRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteSpecialist(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error)
+	RemoveProcedureFromSpecialist(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetAllSpecialists(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SpecialistListResponse, error)
 	GetAllProcedures(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ProcedureListResponse, error)
 	AssignProcedureToSpecialist(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*AssignResponse, error)
@@ -77,6 +93,86 @@ func (c *salonServiceClient) AddSpecialist(ctx context.Context, in *AddSpecialis
 	return out, nil
 }
 
+func (c *salonServiceClient) UpdateSalon(ctx context.Context, in *UpdateSalonRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_UpdateSalon_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) DeleteSalon(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_DeleteSalon_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) GetAllSalons(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SalonListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SalonListResponse)
+	err := c.cc.Invoke(ctx, SalonService_GetAllSalons_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) UpdateProcedure(ctx context.Context, in *UpdateProcedureRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_UpdateProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) DeleteProcedure(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_DeleteProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) UpdateSpecialist(ctx context.Context, in *UpdateSpecialistRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_UpdateSpecialist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) DeleteSpecialist(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_DeleteSpecialist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salonServiceClient) RemoveProcedureFromSpecialist(ctx context.Context, in *AssignProcedureRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SalonService_RemoveProcedureFromSpecialist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *salonServiceClient) GetAllSpecialists(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SpecialistListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SpecialistListResponse)
@@ -114,6 +210,14 @@ type SalonServiceServer interface {
 	AddSalon(context.Context, *AddSalonRequest) (*SalonResponse, error)
 	AddProcedure(context.Context, *AddProcedureRequest) (*ProcedureResponse, error)
 	AddSpecialist(context.Context, *AddSpecialistRequest) (*SpecialistResponse, error)
+	UpdateSalon(context.Context, *UpdateSalonRequest) (*Empty, error)
+	DeleteSalon(context.Context, *IdRequest) (*Empty, error)
+	GetAllSalons(context.Context, *Empty) (*SalonListResponse, error)
+	UpdateProcedure(context.Context, *UpdateProcedureRequest) (*Empty, error)
+	DeleteProcedure(context.Context, *IdRequest) (*Empty, error)
+	UpdateSpecialist(context.Context, *UpdateSpecialistRequest) (*Empty, error)
+	DeleteSpecialist(context.Context, *IdRequest) (*Empty, error)
+	RemoveProcedureFromSpecialist(context.Context, *AssignProcedureRequest) (*Empty, error)
 	GetAllSpecialists(context.Context, *Empty) (*SpecialistListResponse, error)
 	GetAllProcedures(context.Context, *Empty) (*ProcedureListResponse, error)
 	AssignProcedureToSpecialist(context.Context, *AssignProcedureRequest) (*AssignResponse, error)
@@ -135,6 +239,30 @@ func (UnimplementedSalonServiceServer) AddProcedure(context.Context, *AddProcedu
 }
 func (UnimplementedSalonServiceServer) AddSpecialist(context.Context, *AddSpecialistRequest) (*SpecialistResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSpecialist not implemented")
+}
+func (UnimplementedSalonServiceServer) UpdateSalon(context.Context, *UpdateSalonRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSalon not implemented")
+}
+func (UnimplementedSalonServiceServer) DeleteSalon(context.Context, *IdRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSalon not implemented")
+}
+func (UnimplementedSalonServiceServer) GetAllSalons(context.Context, *Empty) (*SalonListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllSalons not implemented")
+}
+func (UnimplementedSalonServiceServer) UpdateProcedure(context.Context, *UpdateProcedureRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProcedure not implemented")
+}
+func (UnimplementedSalonServiceServer) DeleteProcedure(context.Context, *IdRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProcedure not implemented")
+}
+func (UnimplementedSalonServiceServer) UpdateSpecialist(context.Context, *UpdateSpecialistRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSpecialist not implemented")
+}
+func (UnimplementedSalonServiceServer) DeleteSpecialist(context.Context, *IdRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSpecialist not implemented")
+}
+func (UnimplementedSalonServiceServer) RemoveProcedureFromSpecialist(context.Context, *AssignProcedureRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveProcedureFromSpecialist not implemented")
 }
 func (UnimplementedSalonServiceServer) GetAllSpecialists(context.Context, *Empty) (*SpecialistListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllSpecialists not implemented")
@@ -220,6 +348,150 @@ func _SalonService_AddSpecialist_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SalonService_UpdateSalon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSalonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).UpdateSalon(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_UpdateSalon_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).UpdateSalon(ctx, req.(*UpdateSalonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_DeleteSalon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).DeleteSalon(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_DeleteSalon_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).DeleteSalon(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_GetAllSalons_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).GetAllSalons(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_GetAllSalons_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).GetAllSalons(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_UpdateProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).UpdateProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_UpdateProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).UpdateProcedure(ctx, req.(*UpdateProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_DeleteProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).DeleteProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_DeleteProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).DeleteProcedure(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_UpdateSpecialist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSpecialistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).UpdateSpecialist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_UpdateSpecialist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).UpdateSpecialist(ctx, req.(*UpdateSpecialistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_DeleteSpecialist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).DeleteSpecialist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_DeleteSpecialist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).DeleteSpecialist(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalonService_RemoveProcedureFromSpecialist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalonServiceServer).RemoveProcedureFromSpecialist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SalonService_RemoveProcedureFromSpecialist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalonServiceServer).RemoveProcedureFromSpecialist(ctx, req.(*AssignProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SalonService_GetAllSpecialists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
@@ -292,6 +564,38 @@ var SalonService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSpecialist",
 			Handler:    _SalonService_AddSpecialist_Handler,
+		},
+		{
+			MethodName: "UpdateSalon",
+			Handler:    _SalonService_UpdateSalon_Handler,
+		},
+		{
+			MethodName: "DeleteSalon",
+			Handler:    _SalonService_DeleteSalon_Handler,
+		},
+		{
+			MethodName: "GetAllSalons",
+			Handler:    _SalonService_GetAllSalons_Handler,
+		},
+		{
+			MethodName: "UpdateProcedure",
+			Handler:    _SalonService_UpdateProcedure_Handler,
+		},
+		{
+			MethodName: "DeleteProcedure",
+			Handler:    _SalonService_DeleteProcedure_Handler,
+		},
+		{
+			MethodName: "UpdateSpecialist",
+			Handler:    _SalonService_UpdateSpecialist_Handler,
+		},
+		{
+			MethodName: "DeleteSpecialist",
+			Handler:    _SalonService_DeleteSpecialist_Handler,
+		},
+		{
+			MethodName: "RemoveProcedureFromSpecialist",
+			Handler:    _SalonService_RemoveProcedureFromSpecialist_Handler,
 		},
 		{
 			MethodName: "GetAllSpecialists",
