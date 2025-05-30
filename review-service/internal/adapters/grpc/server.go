@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/gemdivk/LUMERA-SPA/review-service/internal/domain"
 	"github.com/gemdivk/LUMERA-SPA/review-service/internal/domain/application"
-	"github.com/gemdivk/LUMERA-SPA/review-service/internal/usecase"
 	pb "github.com/gemdivk/LUMERA-SPA/review-service/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -14,7 +13,7 @@ type ReviewServer struct {
 	Usecase application.ReviewUsecase
 }
 
-func NewReviewServer(uc *usecase.ReviewInteractor) *ReviewServer {
+func NewReviewServer(uc application.ReviewUsecase) *ReviewServer {
 	return &ReviewServer{Usecase: uc}
 }
 
