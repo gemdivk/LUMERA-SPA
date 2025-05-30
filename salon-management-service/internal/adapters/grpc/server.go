@@ -34,18 +34,20 @@ func (s *SalonServer) AddSalon(ctx context.Context, req *pb.AddSalonRequest) (*p
 
 func (s *SalonServer) AddProcedure(ctx context.Context, req *pb.AddProcedureRequest) (*pb.ProcedureResponse, error) {
 	result, err := s.uc.AddProcedure(&entity.Procedure{
-		SalonID:  req.SalonId,
-		Name:     req.Name,
-		Duration: req.Duration,
+		SalonID:     req.SalonId,
+		Name:        req.Name,
+		Duration:    req.Duration,
+		Description: req.Description,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return &pb.ProcedureResponse{
-		Id:       result.ID,
-		SalonId:  result.SalonID,
-		Name:     result.Name,
-		Duration: result.Duration,
+		Id:          result.ID,
+		SalonId:     result.SalonID,
+		Name:        result.Name,
+		Duration:    result.Duration,
+		Description: result.Description,
 	}, nil
 }
 
@@ -53,6 +55,7 @@ func (s *SalonServer) AddSpecialist(ctx context.Context, req *pb.AddSpecialistRe
 	result, err := s.uc.AddSpecialist(&entity.Specialist{
 		SalonID: req.SalonId,
 		Name:    req.Name,
+		Bio:     req.Bio,
 	})
 	if err != nil {
 		return nil, err
@@ -61,6 +64,7 @@ func (s *SalonServer) AddSpecialist(ctx context.Context, req *pb.AddSpecialistRe
 		Id:      result.ID,
 		SalonId: result.SalonID,
 		Name:    result.Name,
+		Bio:     result.Bio,
 	}, nil
 }
 
@@ -76,6 +80,7 @@ func (s *SalonServer) GetAllSpecialists(ctx context.Context, _ *pb.Empty) (*pb.S
 			Id:      sp.ID,
 			SalonId: sp.SalonID,
 			Name:    sp.Name,
+			Bio:     sp.Bio,
 		})
 	}
 	return &pb.SpecialistListResponse{Specialists: res}, nil
@@ -90,10 +95,11 @@ func (s *SalonServer) GetAllProcedures(ctx context.Context, _ *pb.Empty) (*pb.Pr
 	var res []*pb.ProcedureResponse
 	for _, pr := range procedures {
 		res = append(res, &pb.ProcedureResponse{
-			Id:       pr.ID,
-			SalonId:  pr.SalonID,
-			Name:     pr.Name,
-			Duration: pr.Duration,
+			Id:          pr.ID,
+			SalonId:     pr.SalonID,
+			Name:        pr.Name,
+			Duration:    pr.Duration,
+			Description: pr.Description,
 		})
 	}
 	return &pb.ProcedureListResponse{Procedures: res}, nil
@@ -105,6 +111,11 @@ func (s *SalonServer) AssignProcedureToSpecialist(ctx context.Context, req *pb.A
 		return nil, err
 	}
 	return &pb.AssignResponse{Success: true}, nil
+}
+
+func (s *SalonServer) RemoveProcedureFromSpecialist(ctx context.Context, req *pb.AssignProcedureRequest) (*pb.Empty, error) {
+	err := s.uc.RemoveProcedureFromSpecialist(req.SpecialistId, req.ProcedureId)
+	return &pb.Empty{}, err
 }
 
 func (s *SalonServer) UpdateSalon(ctx context.Context, req *pb.UpdateSalonRequest) (*pb.Empty, error) {
@@ -165,10 +176,5 @@ func (s *SalonServer) UpdateSpecialist(ctx context.Context, req *pb.UpdateSpecia
 
 func (s *SalonServer) DeleteSpecialist(ctx context.Context, req *pb.IdRequest) (*pb.Empty, error) {
 	err := s.uc.DeleteSpecialist(req.Id)
-	return &pb.Empty{}, err
-}
-
-func (s *SalonServer) RemoveProcedureFromSpecialist(ctx context.Context, req *pb.AssignProcedureRequest) (*pb.Empty, error) {
-	err := s.uc.RemoveProcedureFromSpecialist(req.SpecialistId, req.ProcedureId)
 	return &pb.Empty{}, err
 }

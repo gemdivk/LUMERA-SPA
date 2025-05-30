@@ -994,7 +994,7 @@ const file_proto_salon_proto_rawDesc = "" +
 	"\x11GetAllSpecialists\x12\f.salon.Empty\x1a\x1d.salon.SpecialistListResponse\x12>\n" +
 	"\x10GetAllProcedures\x12\f.salon.Empty\x1a\x1c.salon.ProcedureListResponse\x12S\n" +
 	"\x1bAssignProcedureToSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\x15.salon.AssignResponse\x12L\n" +
-	"\x1dRemoveProcedureFromSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\f.salon.EmptyB\x0fZ\r./proto;salonb\x06proto3"
+	"\x1dRemoveProcedureFromSpecialist\x12\x1d.salon.AssignProcedureRequest\x1a\f.salon.EmptyBDZBgithub.com/gemdivk/LUMERA-SPA/salon-management-service/proto;salonb\x06proto3"
 
 var (
 	file_proto_salon_proto_rawDescOnce sync.Once
